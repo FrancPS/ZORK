@@ -46,15 +46,15 @@ int main()
 			}
 			else {	// when return, create tokens
 				Tokenize(input, tokens);
-				cout << endl;
+				cout << endl << endl;
 			}
 		}
 
 		if (tokens.size() > 0 && Same(tokens[0], "quit"))
 			break;
 
-		/*if (world.Tick(args) == false)
-			cout << "\nSorry, I do not understand your command.\n";*/
+		if (world.Parser(tokens) == false)
+			cout << "Sorry, I do not understand your command.\n";
 
 		if (tokens.size() > 0)
 		{
