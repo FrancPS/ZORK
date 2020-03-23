@@ -7,7 +7,7 @@
 #include "Room.h"
 #include "Exit.h"
 
-
+// ---- CONSTRUCTOR ---
 World::World() {
 
 	// ROOMS
@@ -24,15 +24,23 @@ World::World() {
 	player = new Player("Xesk", "You are you", room1);
 }
 
+// ---- PARSER ----
+/* "Language interpreter". Reads the words of a list of strings and calls the
+	functions relative to the actions indicated in the strings
+
+	Parameters:
+		- Vector of strings
+	Return:
+		- NONE
+*/
 bool World::Parser(vector<string>& tokens)
 {
 	bool ret = true;
-	if (tokens.size() > 0 && tokens[0].length() > 0) {
+	if (tokens.size() > 0 && tokens[0].length() > 0) { // parse only if the token list is not empty
 		switch (tokens.size())
 		{
 		case 1: // commands with no arguments ------------------------------
 		{
-
 			if (Same(tokens[0], "look") || Same(tokens[0], "l"))
 			{
 				player->Look(tokens);
@@ -71,6 +79,5 @@ bool World::Parser(vector<string>& tokens)
 			ret = false;
 		}
 	}
-
 	return ret;
 }

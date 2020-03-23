@@ -8,7 +8,6 @@
 
 #include "World.h"
 #include "Global.h"
-#include "ZORK.h"
 
 using namespace std;
 

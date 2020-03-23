@@ -4,6 +4,7 @@
 class Item //: public Entity
 {
 public:
+	// Constructor
 	Item(const char* name, const char* description);
 };
 

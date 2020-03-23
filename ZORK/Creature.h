@@ -2,14 +2,15 @@
 #define __Creature__
 
 #include "Entity.h"
-
-class Room;
+#include "Room.h"
 
 class Creature : public Entity
 {
 public:
+	// Constructor
 	Creature(const char* name, const char* description, Room* room);
 
+	// Methods
 	Room* GetRoom() const;
 };
 

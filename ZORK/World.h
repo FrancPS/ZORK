@@ -5,20 +5,22 @@
 #include <vector>
 #include <list>
 
-using namespace std;
+#include "Player.h"
+#include "Room.h"
+#include "Exit.h"
 
-class Player;
-class Room;
-class Exit;
 
 class World
 {
 	public:
+		// Constructor
 		World();
 
+		// Methods
 		bool Parser(vector<string>& tokens);
 
 	private:
+		// Object Attr
 		Player* player;
 		list<Room*> rooms;
 		list<Exit*> exits;

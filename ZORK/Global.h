@@ -6,8 +6,8 @@
 
 using namespace std;
 
+// Methods
 bool Same(const string& a, const string& b);
-
 void Tokenize(const string& line, vector<string>& arguments);
 
 #endif //__Global__

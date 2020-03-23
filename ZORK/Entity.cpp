@@ -1,9 +1,10 @@
-#include "Entity.h"
 #include <iostream>
-using namespace std;
+
+#include "Entity.h"
 
 
 
+// ---- Constructor ----
 Entity::Entity(const char* name, const char* description, Entity* parent) :
 name(name), description(description), parent(parent)
 {
@@ -11,19 +12,38 @@ name(name), description(description), parent(parent)
 		parent->container.push_back(this);
 }
 
+// ---- LOOK ----
+/* Prints to console the Name and Description of this Entity
+
+	Parameters:
+		- NONE
+	Return:
+		- NONE
+*/
 void Entity::Look()
 {
 	cout << name << endl;
 	cout << description << endl;
 }
 
+// ---- CHANGE PARENT ----
+/* Changes the parent Entity of this Entity
+
+	Parameters:
+		- Entity Object
+	Return:
+		- NONE
+*/
 void Entity::ChangeParent(Entity* new_parent)
 {
+	// If it has a parent, remove it from its parent container list
 	if (parent != NULL)
 		parent->container.remove(this);
 
+	// Set the new parent
 	parent = new_parent;
 
+	// If the new parent is not NULL, add it to its container list
 	if (parent != NULL)
 		parent->container.push_back(this);
 }

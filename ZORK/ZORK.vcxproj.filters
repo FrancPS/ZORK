@@ -71,9 +71,6 @@
     <ClInclude Include="World.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="ZORK.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Global.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>

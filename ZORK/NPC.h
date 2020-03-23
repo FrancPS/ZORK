@@ -4,6 +4,7 @@
 class NPC : public Creature
 {
 public:
+	// Constructor
 	NPC(const char* name, const char* description, Room* room);
 };
 
