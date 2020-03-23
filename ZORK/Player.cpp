@@ -49,7 +49,7 @@ void Player::Look(const vector<string>& tokens) {
 	}
 	// More options...?
 	else
-		cout << "looking somewhere else" << endl;
+		cout << "Looking somewhere else" << endl;
 }
 
 // ---- GO ----
@@ -78,4 +78,54 @@ void Player::Go(const vector<string>& tokens) {
 	{
 		cout << "\nThat exit is locked.\n";
 	}*/
+}
+
+// --- TAKE ---
+/* Moves an Item from the room to the player's inventory
+
+	Parameters:
+		- Vector of strings
+	Return:
+		- NONE
+*/
+void Player::Take(const vector<string>& tokens)
+{
+	Entity* thing = parent->Find(tokens[1]);
+	
+	if (thing == NULL){
+		cout << "There is nothing here with that name." << endl;
+	}
+	else {
+		cout << "You take the " << thing->name << " and put it in your backpack." << endl;
+		thing->ChangeParent(this);
+	}
+}
+
+// ---- INVENTORY ----
+/* Prints the name of everything the player has in its possession
+
+	Parameters:
+		- NONE
+	Return:
+		- NONE
+*/
+void Player::Inventory() const
+{
+	if (container.size() == 0)
+	{
+		cout << "You do not own any item." << endl;
+	}
+	else 
+	{
+		// look all the entities child of player
+		for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
+		{
+			/*if (*it == weapon)
+				cout << "\n" << (*it)->name << " (as weapon)";
+			else if (*it == armour)
+				cout << "\n" << (*it)->name << " (as armour)";
+			else*/
+			cout << (*it)->name << endl;
+		}
+	}
 }

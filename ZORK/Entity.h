@@ -16,6 +16,7 @@ class Entity
 		// Methods
 		virtual void Look();
 		void	ChangeParent(Entity* new_parent);
+		Entity* Find(const string& name) const;
 
 		// Object Attr
 		const char* name;

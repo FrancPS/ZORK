@@ -12,6 +12,14 @@ Entity(name, description, (Entity*)parent)
 	parent->itemsIn.push_back(this);
 }
 
+// ---- LOOK ----
+/* Prints to console the Name and Description of this Item
+
+	Parameters:
+		- NONE
+	Return:
+		- NONE
+*/
 void Item::Look() const
 {
 	cout << endl << name << endl;

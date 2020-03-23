@@ -65,6 +65,10 @@ bool World::Parser(vector<string>& tokens)
 			{
 				player->Go({ "west" });
 			}
+			else if (Same(tokens[0], "inventory") || Same(tokens[0], "i"))
+			{
+				player->Inventory();
+			}
 			else
 				ret = false;
 			break;
@@ -74,6 +78,10 @@ bool World::Parser(vector<string>& tokens)
 			if (Same(tokens[0], "look") || Same(tokens[0], "l"))
 			{
 				player->Look(tokens);
+			}
+			else if (Same(tokens[0], "take") || Same(tokens[0], "pick"))
+			{
+				player->Take(tokens);
 			}
 			else
 				ret = false;

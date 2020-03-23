@@ -12,6 +12,8 @@ public:
 	// Methods
 	void Look(const vector<string>& tokens);
 	void Go(const vector<string>& args);
+	void Take(const vector<string>& args);
+	void Inventory() const;
 };
 
 #endif __Player__

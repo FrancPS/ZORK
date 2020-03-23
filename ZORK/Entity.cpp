@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "Global.h"
 #include "Entity.h"
 
 
@@ -46,4 +47,22 @@ void Entity::ChangeParent(Entity* new_parent)
 	// If the new parent is not NULL, add it to its container list
 	if (parent != NULL)
 		parent->container.push_back(this);
+}
+
+// ---- FIND ----
+/* Finds something contained in this Entity that matches a given name
+
+	Parameters:
+		- String
+	Return:
+		- Entity Object
+*/
+Entity* Entity::Find(const string& name) const
+{
+	for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
+	{
+		if (Same((*it)->name, name))
+			return *it;
+	}
+	return NULL;
 }
