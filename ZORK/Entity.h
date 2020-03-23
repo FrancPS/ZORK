@@ -5,9 +5,12 @@
 
 class Entity
 {
-public:
-	Entity(const char* name, const char* description);
+	public:
+		Entity(const char* name, const char* description);
 
+	public:
+		const char* name;
+		const char* description;
 };
 
 #endif //__Entity__

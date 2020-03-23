@@ -6,10 +6,10 @@
 
 class Room;
 
-class Connection : public Entity
+class Exit : public Entity
 {
 public:
-	Exit(const char* name, const char* opposite_name, const char* description, Room* origin, Room* destination, bool one_way = false);
+	Exit();
 
 };
 
