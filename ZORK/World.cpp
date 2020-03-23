@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Room.h"
 #include "Exit.h"
+#include "Item.h"
 
 // ---- CONSTRUCTOR ---
 World::World() {
@@ -19,6 +20,9 @@ World::World() {
 	// EXITS
 	Exit* exit = new Exit("EAST", "WEST", "an exit", room1, room2);
 	exits.push_back(exit);
+
+	// ITEMS
+	Item* mailbox = new Item("Item", "This is an item.", room1);
 
 	// PLAYER
 	player = new Player("Xesk", "You are you", room1);

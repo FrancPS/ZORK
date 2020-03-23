@@ -31,6 +31,22 @@ void Player::Look(const vector<string>& tokens) {
 		cout << name << endl;
 		cout << description << endl;
 	}
+	// "look (name)" -> Describes something in particular in the room
+	else if (tokens.size() > 1)
+	{
+		bool found = false;
+		for (list<Entity*>::const_iterator it = parent->container.begin(); it != parent->container.cend(); ++it)
+		{
+			if (Same((*it)->name, tokens[1]))
+			{
+				(*it)->Look();
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+			cout << "There is nothing like that here..." << endl;
+	}
 	// More options...?
 	else
 		cout << "looking somewhere else" << endl;

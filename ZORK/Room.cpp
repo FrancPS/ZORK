@@ -26,12 +26,20 @@ void Room::Look() {
 	cout << name << endl;
 	cout << description << endl;
 
-	// Print the info of the exits in the room
+	// Print the info of the Exits in the room
 	for (list<Exit*>::const_iterator iter = exitWays.begin(); iter != exitWays.cend(); ++iter)
 	{
 		Exit* ex = *iter;
-		cout << "Direction " << ex->GetDirectionName(this) << " you see " << ex->description << " that leads to " << ex->GetDestinationName(this)->name << endl;
+		cout << "Direction " << ex->GetDirectionName(this) << " you see " << ex->description << " that leads to " << ex->GetDestinationName(this)->name;
 	}
+
+	// Print the info of the Items in the room
+	for (list<Item*>::const_iterator iter = itemsIn.begin(); iter != itemsIn.cend(); ++iter)
+	{
+		Item* it = *iter;
+		cout << "\nThere is an item here: " << it->name;
+	}
+	cout << endl;
 }
 
 // ---- GET EXIT ----
