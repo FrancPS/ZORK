@@ -6,8 +6,8 @@
 
 
 // ---- Constructor ----
-Item::Item(const char* name, const char* description, Room* parent) :
-Entity(name, description, (Entity*)parent)
+Item::Item(const char* name, const char* description, Room* parent, ItemType item_type) :
+Entity(name, description, (Entity*)parent), item_type(item_type)
 {
 	parent->itemsIn.push_back(this);
 }

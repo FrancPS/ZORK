@@ -24,6 +24,8 @@ class World
 		Player* player;
 		list<Room*> rooms;
 		list<Exit*> exits;
+		list<Item*> items;
+		list<Creature*> creatures;
 };
 
 #endif //__World__

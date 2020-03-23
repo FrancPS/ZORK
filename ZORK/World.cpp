@@ -11,6 +11,8 @@
 // ---- CONSTRUCTOR ---
 World::World() {
 
+	
+
 	// ROOMS
 	Room* room1 = new Room("Room1", "This is a room with stuff inside.");
 	rooms.push_back(room1);
@@ -21,11 +23,16 @@ World::World() {
 	Exit* exit = new Exit("EAST", "WEST", "an exit", room1, room2);
 	exits.push_back(exit);
 
-	// ITEMS
-	Item* mailbox = new Item("Item", "This is an item.", room1);
-
 	// PLAYER
 	player = new Player("Xesk", "You are you", room1);
+	player->HP = player->maxHP = 25;
+	player->mana = player->maxMana = 5;
+
+	// ITEMS
+	Item* item = new Item("Item", "This is an item.", room1);
+	Item* shield = new Item("sh", "This is a shield.", room1, SHIELD);
+
+	
 }
 
 // ---- PARSER ----
@@ -82,6 +89,10 @@ bool World::Parser(vector<string>& tokens)
 			else if (Same(tokens[0], "take") || Same(tokens[0], "pick"))
 			{
 				player->Take(tokens);
+			}
+			else if (Same(tokens[0], "equip") || Same(tokens[0], "eq"))
+			{
+				player->Equip(tokens);
 			}
 			else
 				ret = false;

@@ -14,6 +14,7 @@ public:
 	void Go(const vector<string>& args);
 	void Take(const vector<string>& args);
 	void Inventory() const;
+	void Equip(const vector<string>& args);
 };
 
 #endif __Player__

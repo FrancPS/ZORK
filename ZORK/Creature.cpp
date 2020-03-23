@@ -7,7 +7,11 @@
 Creature::Creature(const char* title, const char* description, Room* room) :
 Entity(title, description, (Entity*)room) 
 {
-
+	HP = maxHP = 1;
+	mana = maxMana = 0;
+	min_damage = max_damage = 1;
+	min_protection = max_protection = 0;
+	weapon = armour = shield = NULL;
 }
 
 // ---- GET ROOM ----

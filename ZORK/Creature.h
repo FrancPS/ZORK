@@ -12,6 +12,19 @@ public:
 
 	// Methods
 	Room* GetRoom() const;
+
+	// Object Attr
+	int HP;
+	int maxHP;
+	int mana;
+	int maxMana;
+	int min_damage;
+	int max_damage;
+	int min_protection;
+	int max_protection;
+	Item* weapon;
+	Item* armour;
+	Item* shield;
 };
 
 #endif //__Creature__

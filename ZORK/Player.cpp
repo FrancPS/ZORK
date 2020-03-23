@@ -120,12 +120,67 @@ void Player::Inventory() const
 		// look all the entities child of player
 		for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
 		{
-			/*if (*it == weapon)
+			if (*it == weapon)
 				cout << "\n" << (*it)->name << " (as weapon)";
 			else if (*it == armour)
 				cout << "\n" << (*it)->name << " (as armour)";
-			else*/
-			cout << (*it)->name << endl;
+			else if (*it == shield)
+				cout << "\n" << (*it)->name << " (as armour)";
+			else
+				cout << (*it)->name << endl;
+		}
+	}
+}
+
+// ---- EQUIP ----
+/* Searches an item in the player's inventory, and equips it at its
+	corresponding slot
+
+	Parameters:
+		- Vesctor of strings
+	Return:
+		- NONE
+*/
+void Player::Equip(const vector<string>& tokens)
+{
+	Item* item = NULL;
+	// look all the entities child of player
+	for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
+	{
+		// if an item matches the tokens, use that one
+		if (Same((*it)->name, tokens[1])) {
+			item = (Item*)*it;
+			break;
+		}
+	}
+	// No item matched
+	if (item == NULL)
+	{
+		cout << "Cannot find '" << tokens[1] << "', it is not in your inventory." << endl;
+	}
+	else 
+	{
+		// equip the item on its equipment slot
+		switch (item->item_type)
+		{
+		case WEAPON:
+			weapon = item;
+			cout << "You equip " << item->name << " as a Weapon." << endl;
+			break;
+
+		case ARMOUR:
+			armour = item;
+			cout << "You equip " << item->name << " as Armour." << endl;
+			break;
+
+		case SHIELD:
+			shield = item;
+			cout << "You equip " << item->name << " as a Shield." << endl;
+			break;
+
+		default:
+			cout << item->name << " cannot be equipped." << endl;
+			break;
 		}
 	}
 }
