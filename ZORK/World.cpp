@@ -40,8 +40,7 @@ bool World::Parser(vector<string>& tokens)
 		{
 			if (Same(tokens[0], "look") || Same(tokens[0], "l"))
 			{
-				//player->Look(tokens);
-				cout << "the player looked" << endl;
+				player->Look(tokens);
 			}
 			else
 				ret = false;

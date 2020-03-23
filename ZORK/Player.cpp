@@ -1,3 +1,4 @@
+#include "Global.h"
 #include "Entity.h"
 #include "Creature.h"
 #include "Player.h"
@@ -10,6 +11,14 @@ Creature(title, description, room)
 }
 
 void Player::Look(const vector<string>& tokens) {
-	cout << "the player does " << tokens[0] << endl;
-	cout << parent->description << endl;
+
+	if (tokens.size() == 1)
+		parent->Look();
+	else if (Same(tokens[1], "me")) {
+		cout << name << endl;
+		cout << description << endl;
+	}
+	else
+		cout << "looking somewhere else" << endl;
+	
 }

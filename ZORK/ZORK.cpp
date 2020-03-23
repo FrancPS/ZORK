@@ -22,8 +22,9 @@ int main()
     cout << "Welcome to Xesk's Zork!\n";
     cout << "----------------\n";
 
-
     World world;
+
+	tokens.push_back("look");
 
     while (1) {
 		if (_kbhit() != 0)

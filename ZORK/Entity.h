@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 
 using namespace std;
 
@@ -17,6 +18,7 @@ class Entity
 		const char* name;
 		const char* description;
 		Entity* parent;
+		list<Entity*> container;
 };
 
 #endif //__Entity__
