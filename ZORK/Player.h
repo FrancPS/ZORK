@@ -9,6 +9,7 @@ public:
 	Player(const char* name, const char* description, Room* room);
 
 	void Look(const vector<string>& tokens);
+	void Go(const vector<string>& args);
 };
 
 #endif __Player__

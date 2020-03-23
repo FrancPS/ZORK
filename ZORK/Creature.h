@@ -9,6 +9,8 @@ class Creature : public Entity
 {
 public:
 	Creature(const char* name, const char* description, Room* room);
+
+	Room* GetRoom() const;
 };
 
 #endif //__Creature__

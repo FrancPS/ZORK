@@ -12,9 +12,9 @@ class Entity
 	public:
 		Entity(const char* name, const char* description, Entity* parent);
 
-		virtual void Look() const;
+		virtual void Look();
+		void	ChangeParent(Entity* new_parent);
 
-	public:
 		const char* name;
 		const char* description;
 		Entity* parent;

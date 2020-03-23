@@ -10,3 +10,9 @@ Entity(title, description, (Entity*)room)
 {
 
 }
+
+// ----------------------------------------------------
+Room* Creature::GetRoom() const
+{
+	return (Room*)parent;
+}

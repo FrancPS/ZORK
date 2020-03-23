@@ -7,8 +7,9 @@
 
 using namespace std;
 
-class Room;
 class Player;
+class Room;
+class Exit;
 
 class World
 {
@@ -20,6 +21,7 @@ class World
 	private:
 		Player* player;
 		list<Room*> rooms;
+		list<Exit*> exits;
 };
 
 #endif //__World__
