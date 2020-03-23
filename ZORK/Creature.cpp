@@ -1,9 +1,12 @@
-#include "Entity.h"
+#include "Room.h"
 #include "Creature.h"
+
 #include <iostream>
+
 using namespace std;
 
-Creature::Creature(const char* title, const char* description) :
-	Entity(title, description) {
+Creature::Creature(const char* title, const char* description, Room* room) :
+Entity(title, description, (Entity*)room) 
+{
 
 }

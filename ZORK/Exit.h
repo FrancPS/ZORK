@@ -6,7 +6,7 @@
 
 class Room;
 
-class Exit : public Entity
+class Exit //: public Entity
 {
 public:
 	Exit();

@@ -3,15 +3,20 @@
 #include "World.h"
 #include "Global.h"
 #include "Entity.h"
+#include "Player.h"
 #include "Room.h"
 #include "Exit.h"
 
 
 World::World() {
-	
+
+	// ROOMS
+	Room* room1 = new Room("Room1", "This is a room with stuff inside.");
+	rooms.push_back(room1);
 
 
-	
+	// PLAYER
+	player = new Player("Xesk", "You are you", room1);
 }
 
 bool World::Parser(vector<string>& tokens)
@@ -25,8 +30,7 @@ bool World::Parser(vector<string>& tokens)
 
 			if (Same(tokens[0], "look") || Same(tokens[0], "l"))
 			{
-				//player->Look(tokens);
-				cout << "the player looked" << endl;
+				player->Look(tokens);
 			}
 			else
 				ret = false;

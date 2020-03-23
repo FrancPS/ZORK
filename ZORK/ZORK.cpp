@@ -54,7 +54,7 @@ int main()
 			break;
 
 		if (world.Parser(tokens) == false)
-			cout << "Sorry, I do not understand your command.\n";
+			cout << "((Sorry, I do not understand your command.))" << endl;
 
 		if (tokens.size() > 0)
 		{

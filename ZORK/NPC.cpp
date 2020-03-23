@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-NPC::NPC(const char* title, const char* description) :
-	Creature(title, description) {
+NPC::NPC(const char* title, const char* description, Room* room) :
+	Creature(title, description, room) {
 
 }

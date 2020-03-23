@@ -4,8 +4,7 @@
 #include <iostream>
 using namespace std;
 
-Exit::Exit() :
-Entity(name, description)
+Exit::Exit() //: Entity(name, description, room)
 {
 
 }
