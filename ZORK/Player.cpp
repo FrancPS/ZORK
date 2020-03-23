@@ -11,6 +11,8 @@
 Player::Player(const char* title, const char* description, Room* room) :
 Creature(title, description, room)
 {
+	HP = maxHP = 25;
+	mana = maxMana = 5;
 }
 
 // ---- LOOK ----
@@ -96,9 +98,33 @@ void Player::Take(const vector<string>& tokens)
 		cout << "There is nothing here with that name." << endl;
 	}
 	else {
-		cout << "You take the " << thing->name << " and put it in your backpack." << endl;
-		thing->ChangeParent(this);
+		if (static_cast<Item*>(thing) != nullptr)
+		{
+			cout << "You take the " << thing->name << " and put it in your backpack." << endl;
+			GetRoom()->itemsIn.remove((Item*)thing);
+			thing->ChangeParent(this);
+		}
+		else
+			cout << "How could you... ? " << endl;
 	}
+}
+
+// ---- DROP ----
+bool Player::Drop(const vector<string>& tokens)
+{
+	Item* item = (Item*)Find(tokens[1]);
+
+	if (item == NULL)
+	{
+		cout << "There is no item on you with that name." << endl;
+		return false;
+	}
+
+	cout << "You drop " << item->name << "..." << endl;
+	GetRoom()->itemsIn.push_back(item);
+	item->ChangeParent(parent);
+
+	return true;
 }
 
 // ---- INVENTORY ----
@@ -117,11 +143,11 @@ void Player::Inventory() const
 	}
 	else 
 	{
-		// look all the entities child of player
+		// look all the child entities of player
 		for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
 		{
 			if (*it == weapon)
-				cout << "\n" << (*it)->name << " (as weapon)";
+				cout << "\n" << (*it)->name << " (as weapon)" << endl;
 			else if (*it == armour)
 				cout << "\n" << (*it)->name << " (as armour)";
 			else if (*it == shield)
@@ -143,16 +169,8 @@ void Player::Inventory() const
 */
 void Player::Equip(const vector<string>& tokens)
 {
-	Item* item = NULL;
-	// look all the entities child of player
-	for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
-	{
-		// if an item matches the tokens, use that one
-		if (Same((*it)->name, tokens[1])) {
-			item = (Item*)*it;
-			break;
-		}
-	}
+	Item* item = (Item*)Find(tokens[1]);
+	
 	// No item matched
 	if (item == NULL)
 	{
@@ -183,4 +201,30 @@ void Player::Equip(const vector<string>& tokens)
 			break;
 		}
 	}
+}
+
+// ---- UNEQUIP ----
+/* Empties an equipment slot if the matched item is equiped there
+
+	Parameters:
+		- Vesctor of strings
+	Return:
+		- NONE
+*/
+void Player::UnEquip(const vector<string>& tokens)
+{
+	if (Same(weapon->name, tokens[1])) {
+		weapon = NULL;
+		cout << "You un-equip " << tokens[1] << "..." << endl;
+	}
+	else if (Same(armour->name, tokens[1])) {
+		armour = NULL;
+		cout << "You un-equip " << tokens[1] << "..." << endl;
+	}
+	else if (Same(shield->name, tokens[1])) {
+		shield = NULL;
+		cout << "You un-equip " << tokens[1] << "..." << endl;
+	}
+	else
+		cout << "You are not wearing this!" << endl;
 }

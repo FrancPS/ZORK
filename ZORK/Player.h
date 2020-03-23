@@ -13,8 +13,11 @@ public:
 	void Look(const vector<string>& tokens);
 	void Go(const vector<string>& args);
 	void Take(const vector<string>& args);
+	bool Drop(const vector<string>& args);
 	void Inventory() const;
 	void Equip(const vector<string>& args);
+	void UnEquip(const vector<string>& args);
+
 };
 
 #endif __Player__

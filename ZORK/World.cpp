@@ -25,8 +25,6 @@ World::World() {
 
 	// PLAYER
 	player = new Player("Xesk", "You are you", room1);
-	player->HP = player->maxHP = 25;
-	player->mana = player->maxMana = 5;
 
 	// ITEMS
 	Item* item = new Item("Item", "This is an item.", room1);
@@ -90,9 +88,17 @@ bool World::Parser(vector<string>& tokens)
 			{
 				player->Take(tokens);
 			}
+			else if (Same(tokens[0], "drop"))
+			{
+				player->Drop(tokens);
+			}
 			else if (Same(tokens[0], "equip") || Same(tokens[0], "eq"))
 			{
 				player->Equip(tokens);
+			}
+			else if (Same(tokens[0], "unequip") || Same(tokens[0], "uneq"))
+			{
+				player->UnEquip(tokens);
 			}
 			else
 				ret = false;
