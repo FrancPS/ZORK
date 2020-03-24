@@ -7,6 +7,7 @@
 #include "Item.h"
 
 class Exit;
+class Creature;
 
 class Room : public Entity
 {
@@ -21,6 +22,7 @@ class Room : public Entity
 		// Object Attr
 		list<Exit*> exitWays;
 		list<Item*> itemsIn;
+		list<Creature*> creaturesIn;
 };
 
 #endif //__Room__

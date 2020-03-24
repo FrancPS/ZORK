@@ -12,6 +12,8 @@ public:
 
 	// Methods
 	Room* GetRoom() const;
+	void Look(const vector<string>& args) const;
+	bool IsAlive() const;
 
 	// Object Attr
 	int HP;

@@ -24,6 +24,11 @@ World::World() {
 	// PLAYER
 	player = new Player("Xesk", "You are you", room1);
 
+	// CREATURES
+	Creature* butler = new Creature("Butler", "It's James, the house Butler.", room1);
+	butler->HP = 10;
+	creatures.push_back(butler);
+
 	// ITEMS
 	Item* const box = new Item("Box", "This is an item.", room1);
 	box->isContainer = true;

@@ -308,3 +308,8 @@ void Player::TakeFrom(const vector<string>& tokens)
 			cout << "How could you... ? " << endl;
 	}
 }
+
+// -- COMBAT --
+void Player::Combat(const vector<string>& tokens) {
+
+}

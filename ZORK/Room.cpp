@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Room.h"
 #include "Exit.h"
+#include "Creature.h"
 
 
 // ---- CONSTRUCTOR ----
@@ -31,16 +32,23 @@ void Room::Look() const
 	for (list<Exit*>::const_iterator iter = exitWays.begin(); iter != exitWays.cend(); ++iter)
 	{
 		Exit* ex = *iter;
-		cout << "Direction " << ex->GetDirectionName(this) << " you see " << ex->description << " that leads to " << ex->GetDestination(this)->name;
+		cout << "Direction " << ex->GetDirectionName(this) << " you see " << ex->description << " that leads to " << ex->GetDestination(this)->name << endl;
 	}
-
 	// Print the info of the Items in the room
 	for (list<Item*>::const_iterator iter = itemsIn.begin(); iter != itemsIn.cend(); ++iter)
 	{
 		Item* it = *iter;
-		cout << "\nThere is an item here: " << it->name;
+		cout << "There is an item here: " << it->name << endl;
 	}
-	cout << endl;
+	// Print the info of the other Creatures in the room
+	for (list<Creature*>::const_iterator iter = creaturesIn.begin(); iter != creaturesIn.cend(); ++iter)
+	{
+		Creature* cr = *iter;
+		cout << "There is someone else here: " << cr->name;
+		if (cr->IsAlive() == false)
+			cout << " (dead)";
+		cout << endl;
+	}
 }
 
 // ---- GET EXIT ----
