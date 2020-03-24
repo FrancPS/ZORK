@@ -21,7 +21,7 @@ name(name), description(description), parent(parent)
 	Return:
 		- NONE
 */
-void Entity::Look()
+void Entity::Look() const
 {
 	cout << name << endl;
 	cout << description << endl;

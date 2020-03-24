@@ -11,24 +11,22 @@
 // ---- CONSTRUCTOR ---
 World::World() {
 
-	
-
 	// ROOMS
-	Room* room1 = new Room("Room1", "This is a room with stuff inside.");
+	Room* const room1 = new Room("Room1", "This is a room with stuff inside.");
 	rooms.push_back(room1);
-	Room* room2 = new Room("Room2", "This is another room.");
+	Room* const room2 = new Room("Room2", "This is another room.");
 	rooms.push_back(room2);
 
 	// EXITS
-	Exit* exit = new Exit("EAST", "WEST", "an exit", room1, room2);
+	Exit* const exit = new Exit("EAST", "WEST", "an exit", room1, room2);
 	exits.push_back(exit);
 
 	// PLAYER
 	player = new Player("Xesk", "You are you", room1);
 
 	// ITEMS
-	Item* item = new Item("Item", "This is an item.", room1);
-	Item* shield = new Item("sh", "This is a shield.", room1, SHIELD);
+	Item* const item = new Item("Item", "This is an item.", room1);
+	Item* const shield = new Item("sh", "This is a shield.", room1, SHIELD);
 
 	
 }
@@ -42,7 +40,7 @@ World::World() {
 	Return:
 		- NONE
 */
-bool World::Parser(vector<string>& tokens)
+const bool World::Parser(vector<string>& tokens) const
 {
 	bool ret = true;
 	if (tokens.size() > 0 && tokens[0].length() > 0) { // parse only if the token list is not empty

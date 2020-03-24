@@ -17,7 +17,7 @@ class World
 		World();
 
 		// Methods
-		bool Parser(vector<string>& tokens);
+		const bool Parser(vector<string>& tokens) const;
 
 	private:
 		// Object Attr

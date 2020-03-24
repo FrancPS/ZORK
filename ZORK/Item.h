@@ -23,7 +23,7 @@ public:
 	void Look() const;
 
 	// Object Attr
-	ItemType item_type;
+	const ItemType item_type;
 };
 
 #endif //__Item__

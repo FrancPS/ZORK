@@ -13,12 +13,11 @@ public:
 	Exit(const char* name, const char* opposite_name, const char* description, Room* origin, Room* destination);
 
 	//Methods
-	const string& GetDirectionName(Room* room);
-	Room* GetDestinationName(const Room* room) const;
+	const char* GetDirectionName(const Room* room) const;
+	Room* GetDestination(const Room* room) const;
 
 	// Object Attr
-	string name;
-	string opposite_name;
+	const char* opposite_name;
 	Room* destination;
 };
 

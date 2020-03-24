@@ -10,10 +10,10 @@ public:
 	Player(const char* name, const char* description, Room* room);
 
 	// Methods
-	void Look(const vector<string>& tokens);
+	void Look(const vector<string>& tokens) const;
 	void Go(const vector<string>& args);
 	void Take(const vector<string>& args);
-	bool Drop(const vector<string>& args);
+	void Drop(const vector<string>& args);
 	void Inventory() const;
 	void Equip(const vector<string>& args);
 	void UnEquip(const vector<string>& args);

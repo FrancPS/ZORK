@@ -14,12 +14,13 @@ class Entity
 		Entity(const char* name, const char* description, Entity* parent);
 
 		// Methods
-		virtual void Look();
+		virtual void Look() const;
 		void	ChangeParent(Entity* new_parent);
 		Entity* Find(const string& name) const;
 
 		// Object Attr
-		const char* name;
+	public:
+		const char* const name;
 		const char* description;
 		Entity* parent;
 		list<Entity*> container;

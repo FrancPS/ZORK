@@ -6,7 +6,7 @@
 // Constructor
 Exit::Exit(const char* name, const char* opposite_name, const char* description, Room* origin, Room* destination) :
 Entity(name, description, origin),
-destination(destination), opposite_name(opposite_name), name(name)
+destination(destination), opposite_name(opposite_name)
 {
 	origin->exitWays.push_back(this);
 	destination->exitWays.push_back(this);
@@ -24,14 +24,14 @@ destination(destination), opposite_name(opposite_name), name(name)
 	Return:
 		- String
 */
-const string& Exit::GetDirectionName (Room* room)
+const char* Exit::GetDirectionName (const Room* room) const
 {
 	if (room == parent)
 		return name;
 	if (room == destination)
 		return opposite_name;
 
-	return name; // error ?
+	return ""; // error ?
 }
 
 // ---- GET DESTINATION NAME ---
@@ -43,7 +43,7 @@ const string& Exit::GetDirectionName (Room* room)
 	Return:
 		- Room Object
 */
-Room* Exit::GetDestinationName(const Room* room) const
+Room* Exit::GetDestination(const Room* room) const
 {
 	if (room == parent)
 		return destination;

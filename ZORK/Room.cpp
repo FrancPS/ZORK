@@ -21,7 +21,8 @@ Entity(title, description, NULL)
 	Return:
 		- NONE
 */
-void Room::Look() {
+void Room::Look() const
+{
 	// Print the info of the room
 	cout << name << endl;
 	cout << description << endl;
@@ -30,7 +31,7 @@ void Room::Look() {
 	for (list<Exit*>::const_iterator iter = exitWays.begin(); iter != exitWays.cend(); ++iter)
 	{
 		Exit* ex = *iter;
-		cout << "Direction " << ex->GetDirectionName(this) << " you see " << ex->description << " that leads to " << ex->GetDestinationName(this)->name;
+		cout << "Direction " << ex->GetDirectionName(this) << " you see " << ex->description << " that leads to " << ex->GetDestination(this)->name;
 	}
 
 	// Print the info of the Items in the room
@@ -50,7 +51,7 @@ void Room::Look() {
 	Return:
 		- Exit Object
 */
-Exit* Room::GetExit(const string& direction) {
+Exit* Room::GetExit(const string& direction) const {
 	// Check every exit in the room
 	for (list<Exit*>::const_iterator iter = exitWays.begin(); iter != exitWays.cend(); ++iter)
 	{

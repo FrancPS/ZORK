@@ -23,7 +23,7 @@ Creature(title, description, room)
 	Return:
 		- NONE
 */
-void Player::Look(const vector<string>& tokens) {
+void Player::Look(const vector<string>& tokens) const {
 
 	// "look", "look room" or "look around" -> Describes the Room
 	if (tokens.size() == 1 || Same(tokens[1], "room") || Same(tokens[1], "around"))
@@ -72,14 +72,9 @@ void Player::Go(const vector<string>& tokens) {
 	// if there IS an exit...
 	else {
 		cout << "\nYou take direction " << exit->GetDirectionName((Room*)parent) << "...\n";
-		ChangeParent(exit->GetDestinationName((Room*)parent));	// change the parent of the player (position)
+		ChangeParent(exit->GetDestination((Room*)parent));	// change the parent of the player (position)
 		parent->Look();	// describe the new room
 	}
-
-	/*if (exit->locked)
-	{
-		cout << "\nThat exit is locked.\n";
-	}*/
 }
 
 // --- TAKE ---
@@ -110,21 +105,20 @@ void Player::Take(const vector<string>& tokens)
 }
 
 // ---- DROP ----
-bool Player::Drop(const vector<string>& tokens)
+void Player::Drop(const vector<string>& tokens)
 {
 	Item* item = (Item*)Find(tokens[1]);
 
 	if (item == NULL)
 	{
 		cout << "There is no item on you with that name." << endl;
-		return false;
 	}
-
-	cout << "You drop " << item->name << "..." << endl;
-	GetRoom()->itemsIn.push_back(item);
-	item->ChangeParent(parent);
-
-	return true;
+	else 
+	{
+		cout << "You drop " << item->name << "..." << endl;
+		GetRoom()->itemsIn.push_back(item);
+		item->ChangeParent(parent);
+	}
 }
 
 // ---- INVENTORY ----

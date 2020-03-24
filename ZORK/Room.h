@@ -15,8 +15,8 @@ class Room : public Entity
 		Room(const char* name, const char* description);
 
 		// Methods
-		void Look();
-		Exit* GetExit(const string& direction);
+		void Look() const;
+		Exit* GetExit(const string& direction) const;
 
 		// Object Attr
 		list<Exit*> exitWays;
