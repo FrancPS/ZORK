@@ -107,6 +107,10 @@ const bool World::Parser(vector<string>& tokens) const
 			{
 				player->UnEquip(tokens);
 			}
+			else if (Same(tokens[0], "attack") || Same(tokens[0], "atk"))
+			{
+				player->Combat(tokens);
+			}
 			else
 				ret = false;
 			break;

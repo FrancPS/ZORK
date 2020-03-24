@@ -37,11 +37,11 @@ void Player::Look(const vector<string>& tokens) const {
 	else if (tokens.size() > 1)
 	{
 		bool found = false;
-		for (list<Entity*>::const_iterator it = parent->container.begin(); it != parent->container.cend(); ++it)
+		for (list<Entity*>::const_iterator iter = parent->container.begin(); iter != parent->container.cend(); ++iter)
 		{
-			if (Same((*it)->name, tokens[1]))
+			if (Same((*iter)->name, tokens[1]))
 			{
-				(*it)->Look();
+				(*iter)->Look();
 				found = true;
 				break;
 			}
@@ -146,16 +146,16 @@ void Player::Inventory() const
 	else 
 	{
 		// look all the child entities of player
-		for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
+		for (list<Entity*>::const_iterator iter = container.begin(); iter != container.cend(); ++iter)
 		{
-			if (*it == weapon)
-				cout << "-" << (*it)->name << " (as weapon)" << endl;
-			else if (*it == armour)
-				cout << "-" << (*it)->name << " (as armour)" << endl;
-			else if (*it == shield)
-				cout << "-" << (*it)->name << " (as armour)" << endl;
+			if (*iter == weapon)
+				cout << "-" << (*iter)->name << " (as weapon)" << endl;
+			else if (*iter == armour)
+				cout << "-" << (*iter)->name << " (as armour)" << endl;
+			else if (*iter == shield)
+				cout << "-" << (*iter)->name << " (as armour)" << endl;
 			else
-				cout << "-" << (*it)->name << endl;
+				cout << "-" << (*iter)->name << endl;
 		}
 	}
 }
@@ -261,7 +261,7 @@ void Player::Put(const vector<string>& tokens)
 				// Get other items inside the container,and see the space occupied
 				int totalSpace = 0;
 				Item* it;
-				for (list<Entity*>::const_iterator iter = itemContainer->container.begin(); iter != itemContainer->container.cend(); ++it)
+				for (list<Entity*>::const_iterator iter = itemContainer->container.begin(); iter != itemContainer->container.cend(); ++iter)
 				{
 					it = (Item*)(*iter);
 					totalSpace = totalSpace + it->itemSize;
@@ -312,4 +312,28 @@ void Player::TakeFrom(const vector<string>& tokens)
 // -- COMBAT --
 void Player::Combat(const vector<string>& tokens) {
 
+	Creature* enemy = NULL;
+
+	for (list<Creature*>::const_iterator iter = GetRoom()->creaturesIn.begin(); iter != GetRoom()->creaturesIn.cend(); ++iter)
+	{
+		if (Same((*iter)->name, tokens[1])) {
+			enemy = *iter;
+			break;
+		}
+	}
+
+	if (enemy != NULL) 
+	{
+		while (IsAlive()) {
+			Attack(enemy);
+			if (enemy->IsAlive())
+				enemy->Attack(this);
+			else {
+				cout << "You killed " << enemy->name << endl;
+				break;
+			}
+		}
+	}
+	else
+		cout << "There is no such to attack." << endl;
 }

@@ -20,7 +20,7 @@ public:
 	Item(const char* name, const char* description, Room* parent, ItemType item_type = COMMON, int itemSize = 1, bool isContainer = false);
 
 	// Methods
-	void Look() const;
+	void Look() const override;
 
 	// Object Attr
 	const ItemType item_type;

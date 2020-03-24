@@ -12,8 +12,9 @@ public:
 
 	// Methods
 	Room* GetRoom() const;
-	void Look(const vector<string>& args) const;
+	void Look() const override;
 	bool IsAlive() const;
+	void Attack(Creature* enemy);
 
 	// Object Attr
 	int HP;
