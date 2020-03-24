@@ -17,6 +17,8 @@ public:
 	void Inventory() const;
 	void Equip(const vector<string>& args);
 	void UnEquip(const vector<string>& args);
+	void Put(const vector<string>& tokens);
+	void TakeFrom(const vector<string>& args);
 
 };
 

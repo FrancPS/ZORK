@@ -17,13 +17,15 @@ class Item : public Entity
 {
 public:
 	// Constructor
-	Item(const char* name, const char* description, Room* parent, ItemType item_type = COMMON);
+	Item(const char* name, const char* description, Room* parent, ItemType item_type = COMMON, int itemSize = 1, bool isContainer = false);
 
 	// Methods
 	void Look() const;
 
 	// Object Attr
 	const ItemType item_type;
+	int itemSize;
+	bool isContainer;
 };
 
 #endif //__Item__

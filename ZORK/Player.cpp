@@ -105,6 +105,13 @@ void Player::Take(const vector<string>& tokens)
 }
 
 // ---- DROP ----
+/* Searches an item in the player's inventory, places it down inside the room
+
+	Parameters:
+		- Vesctor of strings
+	Return:
+		- NONE
+*/
 void Player::Drop(const vector<string>& tokens)
 {
 	Item* item = (Item*)Find(tokens[1]);
@@ -131,6 +138,7 @@ void Player::Drop(const vector<string>& tokens)
 */
 void Player::Inventory() const
 {
+	cout << "INVENTORY:" << endl;
 	if (container.size() == 0)
 	{
 		cout << "You do not own any item." << endl;
@@ -141,13 +149,13 @@ void Player::Inventory() const
 		for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
 		{
 			if (*it == weapon)
-				cout << "\n" << (*it)->name << " (as weapon)" << endl;
+				cout << "-" << (*it)->name << " (as weapon)" << endl;
 			else if (*it == armour)
-				cout << "\n" << (*it)->name << " (as armour)";
+				cout << "-" << (*it)->name << " (as armour)" << endl;
 			else if (*it == shield)
-				cout << "\n" << (*it)->name << " (as armour)";
+				cout << "-" << (*it)->name << " (as armour)" << endl;
 			else
-				cout << (*it)->name << endl;
+				cout << "-" << (*it)->name << endl;
 		}
 	}
 }
@@ -221,4 +229,82 @@ void Player::UnEquip(const vector<string>& tokens)
 	}
 	else
 		cout << "You are not wearing this!" << endl;
+}
+
+// ---- PUT ----
+/* Moves an Item from the player's inventory inside another Item
+	Items have a container size, and if filled, they can't contain more objects
+
+	Parameters:
+		- Vector of strings
+	Return:
+		- NONE
+*/
+void Player::Put(const vector<string>& tokens)
+{
+	Item* itemIn = (Item*)Find(tokens[1]);
+
+	// Any of your items matched
+	if (itemIn == NULL)
+		cout << "Cannot find '" << tokens[1] << "', it is not in your inventory." << endl;
+	else
+	{
+		Item* itemContainer = (Item*)parent->Find(tokens[3]);
+
+		// Any of the items in the room matched
+		if (itemContainer == NULL)
+			cout << "Cannot find '" << tokens[3] << "' in this room." << endl;
+		else 
+		{
+			// If you can place something inside the item
+			if (itemContainer->isContainer) {
+				// Get other items inside the container,and see the space occupied
+				int totalSpace = 0;
+				Item* it;
+				for (list<Entity*>::const_iterator iter = itemContainer->container.begin(); iter != itemContainer->container.cend(); ++it)
+				{
+					it = (Item*)(*iter);
+					totalSpace = totalSpace + it->itemSize;
+				}
+				totalSpace = totalSpace + itemIn->itemSize; // Add the space of the new item
+
+				// If the item can fit in
+				if (totalSpace <= itemContainer->itemSize) {
+					itemIn->ChangeParent(itemContainer);
+					cout << "You placed '" << itemIn->name << "' inside '" << itemContainer->name << "'." << endl;
+				}
+				else
+					cout << "'" << itemIn->name << "' can't fit in '" << itemContainer->name << "'." << endl;
+			}
+			// If you cant place anything inside
+			else
+				cout << "You can't place anything inside '" << itemContainer->name << "'!." << endl;
+		}
+	}
+}
+
+// --- TAKE FROM ---
+/* Moves an Item from inside an Item to the player's inventory
+
+	Parameters:
+		- Vector of strings
+	Return:
+		- NONE
+*/
+void Player::TakeFrom(const vector<string>& tokens)
+{
+	Entity* itemContainer = parent->Find(tokens[3]);
+
+	if (itemContainer == NULL)
+		cout << "Cannot find '" << tokens[3] << "' in this room." << endl;
+	else {
+		Entity* itemIn = itemContainer->Find(tokens[1]);
+		if (static_cast<Item*>(itemIn) != nullptr)
+		{
+			cout << "You take the '" << itemIn->name << "' from '" << itemContainer->name << "' and put it in your backpack." << endl;
+			itemIn->ChangeParent(this);
+		}
+		else
+			cout << "How could you... ? " << endl;
+	}
 }

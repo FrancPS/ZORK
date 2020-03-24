@@ -6,8 +6,8 @@
 
 
 // ---- Constructor ----
-Item::Item(const char* name, const char* description, Room* parent, ItemType item_type) :
-Entity(name, description, (Entity*)parent), item_type(item_type)
+Item::Item(const char* name, const char* description, Room* parent, ItemType item_type, int itemSize, bool isContainer) :
+Entity(name, description, (Entity*)parent), item_type(item_type), itemSize(itemSize), isContainer(isContainer)
 {
 	parent->itemsIn.push_back(this);
 }
@@ -25,13 +25,15 @@ void Item::Look() const
 	cout << endl << name << endl;
 	cout << description << endl;
 
-	/*list<Entity*> stuff;
-	FindAll(ITEM, stuff);
-
-	if (stuff.size() > 0)
-	{
-		cout << "It contains: " << "\n";
-		for (list<Entity*>::const_iterator it = stuff.begin(); it != stuff.cend(); ++it)
-			cout << (*it)->name << "\n";
-	}*/
+	if (isContainer) {
+		if (container.size() > 0)
+		{
+			cout << "It contains: " << endl;
+			for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
+				cout << (*it)->name << endl;
+		}
+		else
+			cout << "It contains nothing." << endl;
+	}
 }
+

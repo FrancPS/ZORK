@@ -25,8 +25,12 @@ World::World() {
 	player = new Player("Xesk", "You are you", room1);
 
 	// ITEMS
-	Item* const item = new Item("Item", "This is an item.", room1);
+	Item* const box = new Item("Box", "This is an item.", room1);
+	box->isContainer = true;
 	Item* const shield = new Item("sh", "This is a shield.", room1, SHIELD);
+	shield->itemSize = 1;
+	Item* const shield2 = new Item("sh2", "This is a shield.", room1, SHIELD);
+	shield2->itemSize = 2;
 
 	
 }
@@ -97,6 +101,20 @@ const bool World::Parser(vector<string>& tokens) const
 			else if (Same(tokens[0], "unequip") || Same(tokens[0], "uneq"))
 			{
 				player->UnEquip(tokens);
+			}
+			else
+				ret = false;
+			break;
+		}
+		case 4: // commands with 3 argument ------------------------------
+		{
+			if (Same(tokens[0], "take") || Same(tokens[0], "pick"))
+			{
+				player->TakeFrom(tokens);
+			}
+			else if (Same(tokens[0], "put") || Same(tokens[0], "place"))
+			{
+				player->Put(tokens);
 			}
 			else
 				ret = false;
