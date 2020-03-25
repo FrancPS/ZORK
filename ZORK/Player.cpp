@@ -81,6 +81,7 @@ void Player::Go(const vector<string>& tokens) {
 		cout << "\nYou take direction " << exit->GetDirectionName((Room*)parent) << "...\n";
 		ChangeParent(exit->GetDestination((Room*)parent));	// change the parent of the player (position)
 		parent->Look();	// describe the new room
+		Victory();
 	}
 }
 
@@ -466,4 +467,25 @@ void Player::Loot(const vector<string>& tokens)
 	}
 	else
 		cout << "That is not something you can loot." << endl;
+}
+
+// ---- LOOT ----
+/* Check the conditions for winning the game. The conditions are:
+	- The player has the troll's amulet
+	- The player escaped to the Rooftop
+
+	Parameters:
+		- NONE
+	Return:
+		- NONE
+*/
+void Player::Victory() const
+{
+	if (GetRoom()->name == "Rooftop") {
+		Entity* amulet = Find("Amulet");
+		if (amulet != NULL) {
+			victory = true;
+			gameOver = true;
+		}
+	}
 }

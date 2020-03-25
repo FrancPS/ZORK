@@ -22,6 +22,7 @@ public:
 	void Combat(const vector<string>& tokens);
 	void Stats(const vector<string>& tokens) const;
 	void Loot(const vector<string>& tokens);
+	void Victory() const;
 
 };
 

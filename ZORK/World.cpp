@@ -36,7 +36,7 @@ World::World() {
 	Room* mazeExit = new Room("Circular Room", "You are in a circular room with torches in the wall, and a flat stone in the center.\n"
 		"The stone has a circle of carved runes that emit some magical energy.");
 	rooms.push_back(mazeExit);
-	Room* roof = new Room("Magic Circle", "The magic circle has teleported you to... THE ROOFTOP OF THE HOUSE!.");
+	Room* roof = new Room("Rooftop", "The magic circle has teleported you to... THE ROOFTOP OF THE HOUSE!.");
 	rooms.push_back(roof);
 
 	// EXITS
@@ -76,6 +76,7 @@ World::World() {
 	creatures.push_back(butler);
 
 	Creature* troll = new Creature("Troll", "It's an enormous Troll! You see he is wearing a shiny amulet on his neck.", maze1);
+	butler->SetStats(5, 0, 3, 0);
 	creatures.push_back(troll);
 
 	// ITEMS
@@ -274,18 +275,17 @@ void World::trollAutoMove(vector<string>& trollDir) {
 	// Search the creature troll
 	for (list<Creature*>::iterator it = creatures.begin(); it != creatures.end(); ++it) {
 		if ((*it)->name == "Troll") {
-			
-			// Leave a message if the player is in tha same room
-			if (player->GetRoom() == (*it)->GetRoom())
-				cout << "Troll went " << trollDir[0] << "..." << endl;
+			if ((*it)->IsAlive()) {
+				// Leave a message if the player is in tha same room
+				if (player->GetRoom() == (*it)->GetRoom())
+					cout << "Troll went " << trollDir[0] << "..." << endl;
 
-			(*it)->Go({ trollDir[0] }); // Troll changes room
-			
-			// Update vector for the next future direction
-			trollDir.push_back(trollDir[0]);
-			trollDir.erase(trollDir.begin());
+				(*it)->Go({ trollDir[0] }); // Troll changes room
 
-			
+				// Update vector for the next future direction
+				trollDir.push_back(trollDir[0]);
+				trollDir.erase(trollDir.begin());
+			}
 			break;
 		}
 	}
