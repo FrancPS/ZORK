@@ -10,7 +10,8 @@ Item::Item(const char* name, const char* description, Entity* parent, ItemType i
 Entity(name, description, (Entity*)parent), 
 item_type(item_type), itemSize(itemSize), isContainer(isContainer)
 {
-	if (dynamic_cast<Room*>(parent) != nullptr)
+	type = ITEM;
+	if (parent->type == ROOM)
 		GetRoom()->itemsIn.push_back(this);
 }
 

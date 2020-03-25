@@ -11,6 +11,7 @@
 Player::Player(const char* title, const char* description, Room* room) :
 Creature(title, description, room)
 {
+	type = PLAYER;
 	SetStats(25, 5, 5, 0);
 }
 
@@ -62,11 +63,18 @@ void Player::Look(const vector<string>& tokens) const {
 		- NONE
 */
 void Player::Go(const vector<string>& tokens) {
-	Exit* exit = GetRoom()->GetExit(tokens[0]); // get the exit in the direction given
+	
+	string direction;
+	if (tokens.size() == 1)
+		direction = tokens[0];
+	else
+		direction = tokens[1];
+
+	Exit* exit = GetRoom()->GetExit(direction); // get the exit in the direction given
 	
 	// if there is no exit in that direction...
 	if (exit == NULL) {
-		cout << "\nThere is no exit at '" << tokens[0] << "'.\n";
+		cout << "\nThere is no exit at '" << direction << "'.\n";
 	}
 	// if there IS an exit...
 	else {
@@ -92,7 +100,7 @@ void Player::Take(const vector<string>& tokens)
 		cout << "There is nothing here with that name." << endl;
 	}
 	else {
-		if (static_cast<Item*>(thing) != nullptr)
+		if (thing->type == ITEM)
 		{
 			cout << "You take the " << thing->name << " and put it in your backpack." << endl;
 			GetRoom()->itemsIn.remove((Item*)thing);
@@ -113,17 +121,21 @@ void Player::Take(const vector<string>& tokens)
 */
 void Player::Drop(const vector<string>& tokens)
 {
-	Item* item = (Item*)Find(tokens[1]);
+	Entity* item = Find(tokens[1]);
 
 	if (item == NULL)
 	{
-		cout << "There is no item on you with that name." << endl;
+		cout << "You don't have any item with that name." << endl;
 	}
 	else 
 	{
-		cout << "You drop " << item->name << "..." << endl;
-		GetRoom()->itemsIn.push_back(item);
-		item->ChangeParent(parent);
+		if (item->type = ITEM) {
+			cout << "You drop " << item->name << "..." << endl;
+			GetRoom()->itemsIn.push_back((Item*)item);
+			item->ChangeParent(parent);
+		}
+		else
+			cout << "How on earth did you get his?" << endl;
 	}
 }
 
@@ -171,38 +183,41 @@ void Player::Inventory() const
 */
 void Player::Equip(const vector<string>& tokens)
 {
-	Item* item = (Item*)Find(tokens[1]);
+	Entity* thing = Find(tokens[1]);
 	
 	// No item matched
-	if (item == NULL)
+	if (thing == NULL)
 	{
 		cout << "Cannot find '" << tokens[1] << "', it is not in your inventory." << endl;
 	}
 	else 
 	{
-		// equip the item on its equipment slot
-		switch (item->item_type)
-		{
-		case WEAPON:
-			weapon = item;
-			cout << "You equip " << item->name << " as a Weapon." << endl;
-			break;
+		if (thing->type = ITEM) {
+			Item *item = (Item*)thing;
+			// equip the item on its equipment slot
+			switch (item->item_type)
+			{
+			case WEAPON:
+				weapon = item;
+				cout << "You equip " << item->name << " as a Weapon." << endl;
+				break;
 
-		case ARMOUR:
-			armour = item;
-			cout << "You equip " << item->name << " as Armour." << endl;
-			break;
+			case ARMOUR:
+				armour = item;
+				cout << "You equip " << item->name << " as Armour." << endl;
+				break;
 
-		case SHIELD:
-			shield = item;
-			cout << "You equip " << item->name << " as a Shield." << endl;
-			break;
+			case SHIELD:
+				shield = item;
+				cout << "You equip " << item->name << " as a Shield." << endl;
+				break;
 
-		default:
-			cout << item->name << " cannot be equipped." << endl;
-			break;
+			default:
+				cout << item->name << " cannot be equipped." << endl;
+				break;
+			}
+			ApplyModifiers();
 		}
-		ApplyModifiers();
 	}
 }
 
@@ -244,43 +259,50 @@ void Player::UnEquip(const vector<string>& tokens)
 */
 void Player::Put(const vector<string>& tokens)
 {
-	Item* itemIn = (Item*)Find(tokens[1]);
+	Entity* thingIn = Find(tokens[1]);
 
 	// Any of your items matched
-	if (itemIn == NULL)
+	if (thingIn == NULL)
 		cout << "Cannot find '" << tokens[1] << "', it is not in your inventory." << endl;
 	else
 	{
-		Item* itemContainer = (Item*)parent->Find(tokens[3]);
+		Entity* cont = parent->Find(tokens[3]);
 
 		// Any of the items in the room matched
-		if (itemContainer == NULL)
+		if (cont == NULL)
 			cout << "Cannot find '" << tokens[3] << "' in this room." << endl;
 		else 
 		{
-			// If you can place something inside the item
-			if (itemContainer->isContainer) {
-				// Get other items inside the container,and see the space occupied
-				int totalSpace = 0;
-				Item* it;
-				for (list<Entity*>::const_iterator iter = itemContainer->container.begin(); iter != itemContainer->container.cend(); ++iter)
-				{
-					it = (Item*)(*iter);
-					totalSpace = totalSpace + it->itemSize;
-				}
-				totalSpace = totalSpace + itemIn->itemSize; // Add the space of the new item
+			if (cont->type = ITEM) {
+				Item* itemContainer = (Item*)cont;
+				Item* itemIn = (Item*)thingIn;
 
-				// If the item can fit in
-				if (totalSpace <= itemContainer->itemSize) {
-					itemIn->ChangeParent(itemContainer);
-					cout << "You placed '" << itemIn->name << "' inside '" << itemContainer->name << "'." << endl;
+				// If you can place something inside the item
+				if (itemContainer->isContainer) {
+					// Get other items inside the container, and see the space occupied
+					int totalSpace = 0;
+					Item* it;
+					for (list<Entity*>::const_iterator iter = itemContainer->container.begin(); iter != itemContainer->container.cend(); ++iter)
+					{
+						it = (Item*)(*iter);
+						totalSpace = totalSpace + it->itemSize;
+					}
+					totalSpace = totalSpace + itemIn->itemSize; // Add the space of the new item
+
+					// If the item can fit in
+					if (totalSpace <= itemContainer->itemSize) {
+						itemIn->ChangeParent(itemContainer);
+						cout << "You placed '" << itemIn->name << "' inside '" << itemContainer->name << "'." << endl;
+					}
+					else
+						cout << "'" << itemIn->name << "' can't fit in '" << itemContainer->name << "'." << endl;
 				}
+				// If you cant place anything inside
 				else
-					cout << "'" << itemIn->name << "' can't fit in '" << itemContainer->name << "'." << endl;
+					cout << "You can't place anything inside '" << itemContainer->name << "'!." << endl;
 			}
-			// If you cant place anything inside
 			else
-				cout << "You can't place anything inside '" << itemContainer->name << "'!." << endl;
+				cout << "You can't place anything inside '" << cont->name << "'!." << endl;
 		}
 	}
 }
@@ -300,14 +322,22 @@ void Player::TakeFrom(const vector<string>& tokens)
 	if (itemContainer == NULL)
 		cout << "Cannot find '" << tokens[3] << "' in this room." << endl;
 	else {
-		Entity* itemIn = itemContainer->Find(tokens[1]);
-		if (static_cast<Item*>(itemIn) != nullptr)
-		{
-			cout << "You take the '" << itemIn->name << "' from '" << itemContainer->name << "' and put it in your backpack." << endl;
-			itemIn->ChangeParent(this);
+		if (itemContainer->type == ITEM) {
+			Entity* itemIn = itemContainer->Find(tokens[1]);
+			if (itemIn != NULL) {
+				if (itemIn->type == ITEM)
+				{
+					cout << "You take the '" << itemIn->name << "' from '" << itemContainer->name << "' and put it in your backpack." << endl;
+					itemIn->ChangeParent(this);
+				}
+				else
+					cout << "How could you... ?" << endl;
+			}
+			else
+				cout << "There is nothing like that inside " << itemContainer->name << endl;
 		}
 		else
-			cout << "How could you... ? " << endl;
+			cout << "Thats not how it works..." << endl;
 	}
 }
 
@@ -393,23 +423,32 @@ void Player::Stats(const vector<string>& tokens) const
 */
 void Player::Loot(const vector<string>& tokens)
 {
-	Creature* cre = (Creature*)GetRoom()->Find(tokens[3]);
+	Entity* creat = GetRoom()->Find(tokens[3]);
 	Entity* it = NULL;
 	
-	if (cre->IsAlive())
-		cout << "You cannot take its items if it is alive!" << endl;
-	else {
-		for (list<Entity*>::const_iterator iter = cre->container.begin(); iter != cre->container.cend(); ++iter)
-		{
-			if (Same((*iter)->name, tokens[1])) {
-				it = (*iter);
-				break;
+	if (creat->type == CREATURE){
+		Creature* cre = (Creature*)creat;
+		if (cre->IsAlive())
+			cout << "You cannot take its items if it is alive!" << endl;
+		else {
+			for (list<Entity*>::const_iterator iter = cre->container.begin(); iter != cre->container.cend(); ++iter)
+			{
+				if (Same((*iter)->name, tokens[1])) {
+					it = (*iter);
+					break;
+				}
 			}
-		}
 
-		if (it != NULL)
-			cout << "You loot "<< it->name << " from " << cre->name << " and put it in your backpack." << endl;
-		else
-			cout << endl << "You can't find this inside " << cre->name << "'s inventory." << endl;
+			if (it != NULL) {
+				if (it->type == ITEM) {
+					cout << "You loot " << it->name << " from " << cre->name << " and put it in your backpack." << endl;
+					it->ChangeParent(this);
+				}
+			}
+			else
+				cout << endl << "You can't find this inside " << cre->name << "'s inventory." << endl;
+		}
 	}
+	else
+		cout << "That is not something you can loot." << endl;
 }

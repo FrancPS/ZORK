@@ -8,6 +8,7 @@ Exit::Exit(const char* name, const char* opposite_name, const char* description,
 Entity(name, description, origin),
 destination(destination), opposite_name(opposite_name)
 {
+	type = EXIT;
 	origin->exitWays.push_back(this);
 	destination->exitWays.push_back(this);
 	

@@ -10,6 +10,7 @@
 Entity::Entity(const char* name, const char* description, Entity* parent) :
 name(name), description(description), parent(parent)
 {
+	type = ENTITY;
 	if (parent != NULL)
 		parent->container.push_back(this);
 }
@@ -26,7 +27,6 @@ Room* Entity::GetRoom() const
 {
 	return (Room*)parent;
 }
-
 
 // ---- LOOK ----
 /* Prints to console the Name and Description of this Entity

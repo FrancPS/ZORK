@@ -22,7 +22,7 @@ World::World() {
 	exits.push_back(exit);
 
 	// PLAYER
-	player = new Player("Xesk", "You are you", room1);
+	player = new Player("Hero", "You are you", room1);
 
 	// CREATURES
 	Creature* butler = new Creature("Butler", "It's James, the house Butler.", room1);
@@ -94,6 +94,22 @@ const bool World::Parser(vector<string>& tokens) const
 			if (Same(tokens[0], "look") || Same(tokens[0], "l"))
 			{
 				player->Look(tokens);
+			}
+			else if (Same(tokens[1], "north") || Same(tokens[1], "n"))
+			{
+				player->Go({ "north" });
+			}
+			else if (Same(tokens[1], "south") || Same(tokens[1], "s"))
+			{
+				player->Go({ "south" });
+			}
+			else if (Same(tokens[1], "east") || Same(tokens[1], "e"))
+			{
+				player->Go({ "east" });
+			}
+			else if (Same(tokens[1], "west") || Same(tokens[1], "w"))
+			{
+				player->Go({ "west" });
 			}
 			else if (Same(tokens[0], "take") || Same(tokens[0], "pick"))
 			{

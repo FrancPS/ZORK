@@ -12,7 +12,8 @@
 Creature::Creature(const char* title, const char* description, Room* room) :
 Entity(title, description, (Entity*)room) 
 {
-	if (title != "Xesk") {
+	type = CREATURE;
+	if (title != "Hero") {
 		room->creaturesIn.push_back(this);
 	}
 }

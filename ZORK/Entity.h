@@ -5,9 +5,20 @@
 #include <vector>	// Used in inheritance classes
 #include <list>
 
+using namespace std;
+
 class Room;
 
-using namespace std;
+enum EntityType
+{
+	ENTITY,
+	ROOM,
+	EXIT,
+	ITEM,
+	CREATURE,
+	PLAYER,
+	NPChar
+};
 
 class Entity
 {
@@ -22,7 +33,7 @@ class Entity
 		Entity* Find(const string& name) const;
 
 		// Object Attr
-	public:
+		EntityType type;
 		const char* const name;
 		const char* description;
 		Entity* parent;
