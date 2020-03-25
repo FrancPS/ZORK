@@ -31,7 +31,7 @@ World::World() {
 	// ITEMS
 	Item* const box = new Item("Box", "This is an item.", room1);
 	box->isContainer = true;
-	Item* const shield = new Item("sh", "This is a shield.", room1, SHIELD);
+	Item* const shield = new Item("sh", "This is a shield.", butler, SHIELD);
 	shield->itemSize = 1;
 	shield->combatVal = 3;
 

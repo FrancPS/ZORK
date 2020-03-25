@@ -5,6 +5,8 @@
 #include <vector>	// Used in inheritance classes
 #include <list>
 
+class Room;
+
 using namespace std;
 
 class Entity
@@ -14,6 +16,7 @@ class Entity
 		Entity(const char* name, const char* description, Entity* parent);
 
 		// Methods
+		Room* GetRoom() const;
 		virtual void Look() const;
 		void	ChangeParent(Entity* new_parent);
 		Entity* Find(const string& name) const;

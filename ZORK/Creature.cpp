@@ -17,19 +17,6 @@ Entity(title, description, (Entity*)room)
 	}
 }
 
-// ---- GET ROOM ----
-/* Get the Room where this object is located
-
-	Parameters: 
-		- NONE
-	Return:
-		- The Room Obj
-*/
-Room* Creature::GetRoom() const
-{
-	return (Room*)parent;
-}
-
 // ---- LOOK ----
 /* Prints the description of the creature
 
@@ -44,13 +31,13 @@ void Creature::Look() const
 	{
 		cout << name << endl;
 		cout << description << endl;
-		//Inventory();
 	}
 	else
 	{
 		cout << name << "'s corpse" << endl;
 		cout << "Here lies dead: " << description << endl;
 	}
+	Inventory();
 }
 
 // ---- IS ALIVE ----
@@ -216,3 +203,31 @@ void Creature::PrintStats() const {
 	cout << "Attack: " << (base_damage + max_damage) << "\tDefense: " << (base_prot + max_protection) << endl;
 }
 
+// ---- INVENTORY ----
+/* Prints the name of everything the Creature has in its possession.
+	If the creature is alive, it only prints the equipment,
+	if it is dead, it prints everything
+
+	Parameters:
+		- NONE
+	Return:
+		- NONE
+*/
+void Creature::Inventory() const
+{
+	cout << name << "'s INVENTORY:" << endl;
+
+	// look all the child entities of the Creature
+	for (list<Entity*>::const_iterator iter = container.begin(); iter != container.cend(); ++iter)
+	{
+		if (*iter == weapon)
+			cout << "-" << (*iter)->name << " (as weapon)" << endl;
+		else if (*iter == armour)
+			cout << "-" << (*iter)->name << " (as armour)" << endl;
+		else if (*iter == shield)
+			cout << "-" << (*iter)->name << " (as shield)" << endl;
+		else
+			if (!IsAlive())
+				cout << "-" << (*iter)->name << endl;
+	}
+}

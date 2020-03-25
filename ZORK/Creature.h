@@ -11,7 +11,6 @@ class Creature : public Entity
 		Creature(const char* name, const char* description, Room* room);
 
 		// Methods
-		Room* GetRoom() const;
 		void Look() const override;
 		bool IsAlive() const;
 		void Attack(Creature* enemy);
@@ -19,6 +18,7 @@ class Creature : public Entity
 		void Equip(Item* item);
 		void ApplyModifiers();
 		void PrintStats() const;
+		virtual void Inventory() const;
 
 		// Object Attr
 		int HP = 10;   // !!! Is it correct to initialise here?

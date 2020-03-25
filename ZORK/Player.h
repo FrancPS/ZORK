@@ -14,7 +14,7 @@ public:
 	void Go(const vector<string>& args);
 	void Take(const vector<string>& args);
 	void Drop(const vector<string>& args);
-	void Inventory() const;
+	void Inventory() const override;
 	void Equip(const vector<string>& args);
 	void UnEquip(const vector<string>& args);
 	void Put(const vector<string>& tokens);

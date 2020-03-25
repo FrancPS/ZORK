@@ -6,11 +6,12 @@
 
 
 // ---- Constructor ----
-Item::Item(const char* name, const char* description, Room* parent, ItemType item_type, int itemSize, bool isContainer, int combatVal) :
+Item::Item(const char* name, const char* description, Entity* parent, ItemType item_type, int itemSize, bool isContainer, int combatVal) :
 Entity(name, description, (Entity*)parent), 
 item_type(item_type), itemSize(itemSize), isContainer(isContainer)
 {
-	parent->itemsIn.push_back(this);
+	if (dynamic_cast<Room*>(parent) != nullptr)
+		GetRoom()->itemsIn.push_back(this);
 }
 
 // ---- LOOK ----

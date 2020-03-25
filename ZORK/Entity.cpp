@@ -2,6 +2,7 @@
 
 #include "Global.h"
 #include "Entity.h"
+#include "Room.h"
 
 
 
@@ -12,6 +13,20 @@ name(name), description(description), parent(parent)
 	if (parent != NULL)
 		parent->container.push_back(this);
 }
+
+// ---- GET ROOM ----
+/* Get the Room where this object is located
+
+	Parameters:
+		- NONE
+	Return:
+		- The Room Obj
+*/
+Room* Entity::GetRoom() const
+{
+	return (Room*)parent;
+}
+
 
 // ---- LOOK ----
 /* Prints to console the Name and Description of this Entity

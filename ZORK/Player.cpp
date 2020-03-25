@@ -152,7 +152,7 @@ void Player::Inventory() const
 			else if (*iter == armour)
 				cout << "-" << (*iter)->name << " (as armour)" << endl;
 			else if (*iter == shield)
-				cout << "-" << (*iter)->name << " (as armour)" << endl;
+				cout << "-" << (*iter)->name << " (as shield)" << endl;
 			else
 				cout << "-" << (*iter)->name << endl;
 		}
