@@ -10,6 +10,7 @@
 #include "Global.h"
 
 using namespace std;
+bool gameOver;
 
 int main()
 {
@@ -17,6 +18,7 @@ int main()
 	char key;
     string input;
     vector<string> tokens;
+	gameOver = false;
 
     cout << "Welcome to Xesk's Zork!\n";
     cout << "----------------\n";
@@ -25,7 +27,7 @@ int main()
 
 	tokens.push_back("look");
 
-    while (1) {
+    while (!gameOver) {
 		if (_kbhit() != 0)
 		{
 			key = _getch();

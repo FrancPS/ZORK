@@ -231,21 +231,27 @@ void Player::Equip(const vector<string>& tokens)
 */
 void Player::UnEquip(const vector<string>& tokens)
 {
-	if (Same(weapon->name, tokens[1])) {
-		weapon = NULL;
-		cout << "You un-equip " << tokens[1] << "..." << endl;
-	}
-	else if (Same(armour->name, tokens[1])) {
-		armour = NULL;
-		cout << "You un-equip " << tokens[1] << "..." << endl;
-	}
-	else if (Same(shield->name, tokens[1])) {
-		shield = NULL;
-		cout << "You un-equip " << tokens[1] << "..." << endl;
+	Entity* item = Find(tokens[1]);
+
+	if (item != NULL) {
+		if (Same(weapon->name, tokens[1])) {
+			weapon = NULL;
+			cout << "You un-equip " << tokens[1] << "..." << endl;
+		}
+		else if (Same(armour->name, tokens[1])) {
+			armour = NULL;
+			cout << "You un-equip " << tokens[1] << "..." << endl;
+		}
+		else if (Same(shield->name, tokens[1])) {
+			shield = NULL;
+			cout << "You un-equip " << tokens[1] << "..." << endl;
+		}
+		else
+			cout << "You are not wearing this!" << endl;
+		ApplyModifiers();
 	}
 	else
-		cout << "You are not wearing this!" << endl;
-	ApplyModifiers();
+		cout << "This item is not in your inventory." << endl;
 }
 
 // ---- PUT ----
@@ -267,13 +273,13 @@ void Player::Put(const vector<string>& tokens)
 	else
 	{
 		Entity* cont = parent->Find(tokens[3]);
-
+		
 		// Any of the items in the room matched
 		if (cont == NULL)
 			cout << "Cannot find '" << tokens[3] << "' in this room." << endl;
 		else 
 		{
-			if (cont->type = ITEM) {
+			if (cont->type == ITEM) {
 				Item* itemContainer = (Item*)cont;
 				Item* itemIn = (Item*)thingIn;
 
@@ -295,14 +301,14 @@ void Player::Put(const vector<string>& tokens)
 						cout << "You placed '" << itemIn->name << "' inside '" << itemContainer->name << "'." << endl;
 					}
 					else
-						cout << "'" << itemIn->name << "' can't fit in '" << itemContainer->name << "'." << endl;
+						cout << "'" << itemIn->name << "' cannot fit inside '" << itemContainer->name << "'." << endl;
 				}
 				// If you cant place anything inside
 				else
-					cout << "You can't place anything inside '" << itemContainer->name << "'!." << endl;
+					cout << "You can't place anything inside '" << itemContainer->name << "'!" << endl;
 			}
 			else
-				cout << "You can't place anything inside '" << cont->name << "'!." << endl;
+				cout << "You can't place anything inside '" << cont->name << "'!" << endl;
 		}
 	}
 }
@@ -362,12 +368,21 @@ void Player::Combat(const vector<string>& tokens) {
 				enemy->Attack(this);
 			else {
 				cout << "You killed " << enemy->name << endl;
+				enemy->HP = 0;
 				break;
 			}
 		}
+
+		if (!IsAlive()) {
+			HP = 0;
+			cout << "YOU DIED" << endl;
+			cout << endl << "----------------------------------------------" << endl;
+			cout << "((GAME OVER))" << endl;
+			gameOver = true;
+		}
 	}
 	else
-		cout << "There is no such to attack." << endl;
+		cout << "Attack... what?" << endl;
 }
 
 // ---- PRINT STATS ----

@@ -10,4 +10,5 @@ using namespace std;
 const bool Same(const string& a, const string& b);
 void Tokenize(const string& line, vector<string>& arguments);
 
+extern bool gameOver;
 #endif //__Global__
