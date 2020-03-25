@@ -6,7 +6,7 @@
 
 
 // ---- Constructor ----
-Item::Item(const char* name, const char* description, Room* parent, ItemType item_type, int itemSize, bool isContainer) :
+Item::Item(const char* name, const char* description, Room* parent, ItemType item_type, int itemSize, bool isContainer, int combatVal) :
 Entity(name, description, (Entity*)parent), 
 item_type(item_type), itemSize(itemSize), isContainer(isContainer)
 {

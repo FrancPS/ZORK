@@ -17,7 +17,7 @@ class Item : public Entity
 {
 public:
 	// Constructor
-	Item(const char* name, const char* description, Room* parent, ItemType item_type = COMMON, int itemSize = 1, bool isContainer = false);
+	Item(const char* name, const char* description, Room* parent, ItemType item_type = COMMON, int itemSize = 1, bool isContainer = false, int combatVal = 0);
 
 	// Methods
 	void Look() const override;
@@ -26,6 +26,7 @@ public:
 	const ItemType item_type;
 	int itemSize;
 	bool isContainer;
+	int combatVal;
 };
 
 #endif //__Item__

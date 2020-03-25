@@ -15,12 +15,6 @@ Entity(title, description, (Entity*)room)
 	if (title != "Xesk") {
 		room->creaturesIn.push_back(this);
 	}
-	HP = maxHP = 1;
-	mana = maxMana = 0;
-	min_damage = 1;
-	max_damage = 3;
-	min_protection = max_protection = 1;
-	weapon = armour = shield = NULL;
 }
 
 // ---- GET ROOM ----
@@ -50,7 +44,6 @@ void Creature::Look() const
 	{
 		cout << name << endl;
 		cout << description << endl;
-		cout << HP << "HOLAAAAAAAAAAAAAAAAAAAAAAAA!";
 	}
 	else
 	{
@@ -83,17 +76,17 @@ bool Creature::IsAlive() const
 */
 void Creature::Attack(Creature* enemy)
 {
-	int atk = 0;
-	int def = 0;
+	int atk = base_damage;
+	int def = enemy->base_prot;
 	if (min_damage == max_damage)
-		atk = max_damage;
+		atk += max_damage;
 	else
-		atk = rand() % (max_damage - min_damage + 1) + min_damage;
+		atk += rand() % (max_damage - min_damage + 1) + min_damage;
 	
-	if (min_protection == max_protection)
-		def = max_protection;
+	if (enemy->min_protection == enemy->max_protection)
+		def += enemy->max_protection;
 	else
-		def = rand() % (max_protection - min_protection + 1) + min_protection;
+		def += rand() % (enemy->max_protection - enemy->min_protection + 1) + enemy->min_protection;
 	
 	int dmg = atk - def;
 	if (dmg < 0)
@@ -108,4 +101,100 @@ void Creature::Attack(Creature* enemy)
 	using namespace std::this_thread;	// sleep_for
 	using namespace std::chrono;		// nanoseconds
 	sleep_for(seconds(1));
+}
+
+// ---- SET STATS ----
+/* Setter for the initial base class of this Creature
+	(health, mana, base damage, base defense)
+
+	Parameters:
+		- Int
+		- Int
+		- Int
+		- Int
+	Return:
+		- NONE
+*/
+void Creature::SetStats(int h, int m, int dmg, int def) {
+	HP = maxHP = h;
+	mana = maxMana = m;
+	base_damage = dmg;
+	base_prot = def;
+}
+
+// ---- EQUIP ----
+/* Equips an item to its corresponding slot.
+	Equipping an item changes the stats of the Creature.
+
+	Parameters:
+		- Item Object
+	Return:
+		- NONE
+*/
+void Creature::Equip(Item* item)
+{
+	// equip the item on its equipment slot
+	switch (item->item_type)
+	{
+	case WEAPON:
+		weapon = item;
+		break;
+
+	case ARMOUR:
+		armour = item;
+		break;
+
+	case SHIELD:
+		shield = item;
+		break;
+
+	default:
+		break;
+	}
+	ApplyModifiers();
+}
+
+// ---- APPLY MODIFIERS ----
+/* Gets the combat values for the current equipped items,
+	and adds them to the combat attributes of the Creature.
+
+	Parameters:
+		- NONE
+	Return:
+		- NONE
+*/
+void Creature::ApplyModifiers()
+{
+	// ATTACK
+	if (weapon != NULL) {
+		// if a weapon is equipped
+		max_damage = weapon->combatVal;
+		min_damage = (int)weapon->combatVal / 2;
+	}
+	else {
+		// if a weapon is not equipped
+		max_damage = 0;
+		min_damage = 0;
+	}
+	// DEFENSE
+	if (armour != NULL && shield != NULL) {
+		// if shield and armour are equipped
+		max_protection = armour->combatVal + shield->combatVal;
+		min_protection = (int)(armour->combatVal / 2 + shield->combatVal / 2);
+	}
+	else if (armour != NULL && shield == NULL) {
+		// if only armour is equipped
+		max_protection = armour->combatVal;
+		min_protection = (int)(armour->combatVal / 2);
+	}
+	else if (armour == NULL && shield != NULL) {
+		// if only shield is equipped
+		max_protection = shield->combatVal;
+		min_protection = (int)(shield->combatVal / 2);
+	}
+	else {
+		// if no protection is equipped
+		max_protection = 0;
+		min_protection = 0;
+	}
 }

@@ -26,7 +26,6 @@ World::World() {
 
 	// CREATURES
 	Creature* butler = new Creature("Butler", "It's James, the house Butler.", room1);
-	butler->HP = 10;
 	creatures.push_back(butler);
 
 	// ITEMS
@@ -34,8 +33,7 @@ World::World() {
 	box->isContainer = true;
 	Item* const shield = new Item("sh", "This is a shield.", room1, SHIELD);
 	shield->itemSize = 1;
-	Item* const shield2 = new Item("sh2", "This is a shield.", room1, SHIELD);
-	shield2->itemSize = 2;
+	shield->combatVal = 3;
 
 	
 }

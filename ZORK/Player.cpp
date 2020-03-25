@@ -11,8 +11,7 @@
 Player::Player(const char* title, const char* description, Room* room) :
 Creature(title, description, room)
 {
-	HP = maxHP = 25;
-	mana = maxMana = 5;
+	SetStats(25, 5, 2, 0);
 }
 
 // ---- LOOK ----
@@ -162,10 +161,11 @@ void Player::Inventory() const
 
 // ---- EQUIP ----
 /* Searches an item in the player's inventory, and equips it at its
-	corresponding slot
+	corresponding slot.
+	Equipping an item changes the stats of the Creature.
 
 	Parameters:
-		- Vesctor of strings
+		- Vector of strings
 	Return:
 		- NONE
 */
@@ -202,6 +202,7 @@ void Player::Equip(const vector<string>& tokens)
 			cout << item->name << " cannot be equipped." << endl;
 			break;
 		}
+		ApplyModifiers();
 	}
 }
 
@@ -229,6 +230,7 @@ void Player::UnEquip(const vector<string>& tokens)
 	}
 	else
 		cout << "You are not wearing this!" << endl;
+	ApplyModifiers();
 }
 
 // ---- PUT ----
