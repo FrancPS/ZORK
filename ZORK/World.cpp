@@ -8,6 +8,8 @@
 #include "Exit.h"
 #include "Item.h"
 
+vector<string> trollPath = { "east", "north", "west", "south" };
+
 // ---- CONSTRUCTOR ---
 World::World() {
 
@@ -66,7 +68,7 @@ World::World() {
 	exits.push_back(exME);
 
 	// PLAYER
-	player = new Player("Hero", "You are an awesome adventurer!", forest);
+	player = new Player("Hero", "You are an awesome adventurer!", maze1);
 
 	// CREATURES
 	Creature* butler = new Creature("Butler", "It's James, the house Butler.", house);
@@ -113,7 +115,7 @@ World::World() {
 	Return:
 		- NONE
 */
-const bool World::Parser(vector<string>& tokens) const
+const bool World::Parser(vector<string>& tokens)
 {
 	bool ret = true;
 	if (tokens.size() > 0 && tokens[0].length() > 0) { // parse only if the token list is not empty
@@ -127,30 +129,37 @@ const bool World::Parser(vector<string>& tokens) const
 			}
 			else if (Same(tokens[0], "north") || Same(tokens[0], "n"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "north" });
 			}
 			else if (Same(tokens[0], "south") || Same(tokens[0], "s"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "south" });
 			}
 			else if (Same(tokens[0], "east") || Same(tokens[0], "e"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "east" });
 			}
 			else if (Same(tokens[0], "west") || Same(tokens[0], "w"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "west" });
 			}
 			else if (Same(tokens[0], "up"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "up" });
 			}
 			else if (Same(tokens[0], "down"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "down" });
 			}
 			else if (Same(tokens[0], "inventory") || Same(tokens[0], "i"))
 			{
+				trollAutoMove(trollPath);
 				player->Inventory();
 			}
 			else if (Same(tokens[0], "stats") || Same(tokens[0], "st"))
@@ -169,26 +178,32 @@ const bool World::Parser(vector<string>& tokens) const
 			}
 			else if (Same(tokens[1], "north") || Same(tokens[1], "n"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "north" });
 			}
 			else if (Same(tokens[1], "south") || Same(tokens[1], "s"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "south" });
 			}
 			else if (Same(tokens[1], "east") || Same(tokens[1], "e"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "east" });
 			}
 			else if (Same(tokens[1], "west") || Same(tokens[1], "w"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "west" });
 			}
 			else if (Same(tokens[0], "up"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "up" });
 			}
 			else if (Same(tokens[0], "down"))
 			{
+				trollAutoMove(trollPath);
 				player->Go({ "down" });
 			}
 			else if (Same(tokens[0], "take") || Same(tokens[0], "pick"))
@@ -252,4 +267,27 @@ const bool World::Parser(vector<string>& tokens) const
 		}
 	}
 	return ret;
+}
+
+// ----------------------------------------------------
+void World::trollAutoMove(vector<string>& trollDir) {
+	// Search the creature troll
+	for (list<Creature*>::iterator it = creatures.begin(); it != creatures.end(); ++it) {
+		if ((*it)->name == "Troll") {
+			
+			// Leave a message if the player is in tha same room
+			if (player->GetRoom() == (*it)->GetRoom())
+				cout << "Troll went " << trollDir[0] << "..." << endl;
+
+			(*it)->Go({ trollDir[0] }); // Troll changes room
+			
+			// Update vector for the next future direction
+			trollDir.push_back(trollDir[0]);
+			trollDir.erase(trollDir.begin());
+
+			
+			break;
+		}
+	}
+	
 }

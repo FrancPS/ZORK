@@ -11,14 +11,14 @@ public:
 
 	// Methods
 	void Look(const vector<string>& tokens) const;
-	void Go(const vector<string>& args);
-	void Take(const vector<string>& args);
-	void Drop(const vector<string>& args);
+	void Go(const vector<string>& tokens) override;
+	void Take(const vector<string>& tokens);
+	void Drop(const vector<string>& tokens);
 	void Inventory() const override;
-	void Equip(const vector<string>& args);
-	void UnEquip(const vector<string>& args);
+	void Equip(const vector<string>& tokens);
+	void UnEquip(const vector<string>& tokens);
 	void Put(const vector<string>& tokens);
-	void TakeFrom(const vector<string>& args);
+	void TakeFrom(const vector<string>& tokens);
 	void Combat(const vector<string>& tokens);
 	void Stats(const vector<string>& tokens) const;
 	void Loot(const vector<string>& tokens);

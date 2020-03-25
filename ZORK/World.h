@@ -17,7 +17,8 @@ class World
 		World();
 
 		// Methods
-		const bool Parser(vector<string>& tokens) const;
+		const bool Parser(vector<string>& tokens);
+		void trollAutoMove(vector<string>& trollDir);
 
 	private:
 		// Object Attr

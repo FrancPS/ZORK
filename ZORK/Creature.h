@@ -19,6 +19,7 @@ class Creature : public Entity
 		void ApplyModifiers();
 		void PrintStats() const;
 		virtual void Inventory() const;
+		virtual void Go(const vector<string>& tokens);
 
 		// Object Attr
 		int HP = 10;   // !!! Is it correct to initialise here?

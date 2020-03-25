@@ -5,7 +5,7 @@
 #include "Global.h"
 #include "Creature.h"
 #include "Room.h"
-
+#include "Exit.h"
 
 
 // ---- Constructor ----
@@ -230,5 +230,31 @@ void Creature::Inventory() const
 		else
 			if (!IsAlive())
 				cout << "-" << (*iter)->name << endl;
+	}
+}
+
+// ---- GO ----
+/* Moves the player to another Room. The tokens indicate which direction to take.
+
+	Parameters:
+		- Vector of strings
+	Return:
+		- NONE
+*/
+void Creature::Go(const vector<string>& tokens) {
+
+	string direction;
+	if (tokens.size() == 1)
+		direction = tokens[0];
+	else
+		direction = tokens[1];
+	Room* r = GetRoom();
+	Exit* exit = GetRoom()->GetExit(direction); // get the exit in the direction given
+	// if there is an exit in that direction...
+	if (exit != NULL) {
+		// change the Room of the Creature
+		GetRoom()->creaturesIn.remove(this);
+		ChangeParent(exit->GetDestination((Room*)parent));	// change the parent of the player (position)
+		GetRoom()->creaturesIn.push_back(this);
 	}
 }
