@@ -35,6 +35,8 @@ World::World() {
 	shield->itemSize = 1;
 	shield->combatVal = 3;
 
+	// EQUIP CREATURES
+	butler->Equip(shield);
 	
 }
 
@@ -79,6 +81,10 @@ const bool World::Parser(vector<string>& tokens) const
 			{
 				player->Inventory();
 			}
+			else if (Same(tokens[0], "stats") || Same(tokens[0], "st"))
+			{
+				player->Stats(tokens);
+			}
 			else
 				ret = false;
 			break;
@@ -109,10 +115,24 @@ const bool World::Parser(vector<string>& tokens) const
 			{
 				player->Combat(tokens);
 			}
+			else if (Same(tokens[0], "stats") || Same(tokens[0], "st"))
+			{
+				player->Stats(tokens);
+			}
 			else
 				ret = false;
 			break;
 		}
+		case 3:
+			if (Same(tokens[0], "stats") || Same(tokens[0], "st"))
+			{
+				player->Stats(tokens);
+			}
+			else
+				ret = false;
+			break;
+
+
 		case 4: // commands with 3 argument ------------------------------
 		{
 			if (Same(tokens[0], "take") || Same(tokens[0], "pick"))

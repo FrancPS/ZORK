@@ -20,6 +20,7 @@ public:
 	void Put(const vector<string>& tokens);
 	void TakeFrom(const vector<string>& args);
 	void Combat(const vector<string>& tokens);
+	void Stats(const vector<string>& tokens) const;
 
 };
 

@@ -44,6 +44,7 @@ void Creature::Look() const
 	{
 		cout << name << endl;
 		cout << description << endl;
+		//Inventory();
 	}
 	else
 	{
@@ -152,6 +153,9 @@ void Creature::Equip(Item* item)
 		break;
 	}
 	ApplyModifiers();
+	GetRoom()->itemsIn.remove(item);
+	item->ChangeParent(this);
+	
 }
 
 // ---- APPLY MODIFIERS ----
@@ -198,3 +202,17 @@ void Creature::ApplyModifiers()
 		min_protection = 0;
 	}
 }
+
+// ---- PRINT STATS ----
+/* Print to console the stats of this creature
+
+	Parameters:
+		- NONE
+	Return:
+		- NONE
+*/
+void Creature::PrintStats() const {
+	cout << "HP: " << HP << "/" << maxHP << "\tMana: " << mana << "/" << maxMana << endl;
+	cout << "Attack: " << (base_damage + max_damage) << "\tDefense: " << (base_prot + max_protection) << endl;
+}
+

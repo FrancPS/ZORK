@@ -11,7 +11,7 @@
 Player::Player(const char* title, const char* description, Room* room) :
 Creature(title, description, room)
 {
-	SetStats(25, 5, 2, 0);
+	SetStats(25, 5, 5, 0);
 }
 
 // ---- LOOK ----
@@ -338,4 +338,47 @@ void Player::Combat(const vector<string>& tokens) {
 	}
 	else
 		cout << "There is no such to attack." << endl;
+}
+
+// ---- PRINT STATS ----
+/* Print to console the stats of the player or the creature he is referring to
+
+	Parameters:
+		- Vector of strings
+	Return:
+		- NONE
+*/
+void Player::Stats(const vector<string>& tokens) const 
+{
+	// "stats"
+	if (tokens.size() == 1) {
+		cout << "Your stats:" << endl;
+		PrintStats();
+	}
+	else {
+		// "stats enemy"
+		string enemyName;
+		if (tokens.size() == 2) {
+			enemyName = tokens[1];
+		}
+		// "stats of enemy"
+		else {
+			enemyName = tokens[2];
+		}
+
+		Creature* cre = NULL;
+		for (list<Creature*>::const_iterator iter = GetRoom()->creaturesIn.begin(); iter != GetRoom()->creaturesIn.cend(); ++iter)
+		{
+			if (Same((*iter)->name, enemyName)) {
+				cre = (*iter);
+				break;
+			}
+		}
+		if (cre != NULL) {
+			cout << cre->name << " stats:" << endl;
+			cre->PrintStats();
+		}
+		else
+			cout << "There is no one here with this name." << endl;
+	}
 }

@@ -18,6 +18,7 @@ class Creature : public Entity
 		void SetStats(int h, int m, int dmg, int def);
 		void Equip(Item* item);
 		void ApplyModifiers();
+		void PrintStats() const;
 
 		// Object Attr
 		int HP = 10;   // !!! Is it correct to initialise here?
