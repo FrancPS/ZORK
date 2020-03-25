@@ -143,6 +143,10 @@ const bool World::Parser(vector<string>& tokens) const
 			{
 				player->Put(tokens);
 			}
+			else if (Same(tokens[0], "loot"))
+			{
+				player->Loot(tokens);
+			}
 			else
 				ret = false;
 			break;

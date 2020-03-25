@@ -382,3 +382,34 @@ void Player::Stats(const vector<string>& tokens) const
 			cout << "There is no one here with this name." << endl;
 	}
 }
+
+// ---- LOOT ----
+/* Take all the items from a dead creature and puts them into the player's inventory
+
+	Parameters:
+		- Vector of strings
+	Return:
+		- NONE
+*/
+void Player::Loot(const vector<string>& tokens)
+{
+	Creature* cre = (Creature*)GetRoom()->Find(tokens[3]);
+	Entity* it = NULL;
+	
+	if (cre->IsAlive())
+		cout << "You cannot take its items if it is alive!" << endl;
+	else {
+		for (list<Entity*>::const_iterator iter = cre->container.begin(); iter != cre->container.cend(); ++iter)
+		{
+			if (Same((*iter)->name, tokens[1])) {
+				it = (*iter);
+				break;
+			}
+		}
+
+		if (it != NULL)
+			cout << "You loot "<< it->name << " from " << cre->name << " and put it in your backpack." << endl;
+		else
+			cout << endl << "You can't find this inside " << cre->name << "'s inventory." << endl;
+	}
+}
