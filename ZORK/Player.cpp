@@ -511,8 +511,10 @@ void Player::Drink(const vector<string>& tokens)
 				if (HP > GetMaxHP()) {
 					HP = GetMaxHP();
 				}
-
 				cout << "You drink " << potion->name << " and recover " << potion->combatVal << " HP." << endl;
+				cout << "(The potion was consumed)" << endl;
+				container.remove(potion);
+				delete potion;
 			}
 			else
 				cout << "You cannot drink this!" << endl;
