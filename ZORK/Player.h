@@ -23,6 +23,7 @@ public:
 	void Stats(const vector<string>& tokens) const;
 	void Loot(const vector<string>& tokens);
 	void Victory() const;
+	void Drink(const vector<string>& tokens);
 
 };
 

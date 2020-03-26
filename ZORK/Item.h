@@ -10,7 +10,8 @@ enum ItemType
 	COMMON,
 	WEAPON,
 	ARMOUR,
-	SHIELD
+	SHIELD,
+	HP_POTION
 };
 
 class Item : public Entity

@@ -23,7 +23,8 @@ World::World() {
 	Room* mazeE = new Room("Maze Entrance", "You enter a dark and narrow corridor excavated in the underground that splits into three. \n"
 		"As you get to the crossroad, the doorway from where you came collapses. You are trapped!");
 	rooms.push_back(mazeE);
-	Room* bones = new Room("Bone Room", "You follow the corridor to a room with an extinguished firecamp in a corner,\nand human bones scattered all around the floor.");
+	Room* bones = new Room("Bone Room", "You follow the corridor to a room with an extinguished firecamp in a corner,\nand human bones scattered all around the floor.\n"
+		"There is a rotting corpse in a corner");
 	rooms.push_back(bones);
 	Room* maze1 = new Room("Maze1", "You are in a small room that splits the corridor in two directions.");
 	rooms.push_back(maze1);
@@ -68,7 +69,7 @@ World::World() {
 	exits.push_back(exME);
 
 	// PLAYER
-	player = new Player("Hero", "You are an awesome adventurer!", maze1);
+	player = new Player("Hero", "You are an awesome adventurer!", forest);
 
 	// CREATURES
 	Creature* butler = new Creature("Butler", "It's James, the house Butler.", house);
@@ -76,8 +77,12 @@ World::World() {
 	creatures.push_back(butler);
 
 	Creature* troll = new Creature("Troll", "It's an enormous Troll! You see he is wearing a shiny amulet on his neck.", maze1);
-	butler->SetStats(5, 0, 3, 0);
+	troll->SetStats(40, 0, 7, 3);
 	creatures.push_back(troll);
+
+	Creature* corpse = new Creature("Soldier", "It's the rotting body of someone, possibly a soldier or an adventurer like you.\nOne leg has been... bitten? by something big.", bones);
+	corpse->SetStats(0, 0, 3, 0);
+	creatures.push_back(corpse);
 
 	// ITEMS
 	Item* mailbox = new Item("Mailbox", "Looks like it might contain something.", house);
@@ -101,6 +106,10 @@ World::World() {
 	Item* amulet = new Item("Amulet", "A shiny magical amulet.", troll, COMMON);
 	//exME->key = amulet;
 	items.push_back(amulet);
+
+	Item* potion = new Item("Potion", "A magical beverage to recover vitality.", corpse, HP_POTION);
+	potion->combatVal = 15;
+	items.push_back(potion);
 
 	// EQUIP CREATURES
 	butler->Equip(shield);
@@ -126,6 +135,7 @@ const bool World::Parser(vector<string>& tokens)
 		{
 			if (Same(tokens[0], "look") || Same(tokens[0], "l"))
 			{
+				trollAutoMove(trollPath);
 				player->Look(tokens);
 			}
 			else if (Same(tokens[0], "north") || Same(tokens[0], "n"))
@@ -230,6 +240,10 @@ const bool World::Parser(vector<string>& tokens)
 			else if (Same(tokens[0], "stats") || Same(tokens[0], "st"))
 			{
 				player->Stats(tokens);
+			}
+			else if (Same(tokens[0], "drink"))
+			{
+				player->Drink(tokens);
 			}
 			else
 				ret = false;

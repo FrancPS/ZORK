@@ -469,7 +469,7 @@ void Player::Loot(const vector<string>& tokens)
 		cout << "That is not something you can loot." << endl;
 }
 
-// ---- LOOT ----
+// ---- VICTORY ----
 /* Check the conditions for winning the game. The conditions are:
 	- The player has the troll's amulet
 	- The player escaped to the Rooftop
@@ -488,4 +488,38 @@ void Player::Victory() const
 			gameOver = true;
 		}
 	}
+}
+
+// ---- DRINK ----
+/* Player consumes a potion from its inventory
+
+	Parameters:
+		- Vector of strings
+	Return:
+		- NONE
+*/
+void Player::Drink(const vector<string>& tokens)
+{
+	Entity* thing = Find(tokens[1]);
+
+	if (thing != NULL) {
+		if (thing->type == ITEM) {
+			Item* potion = (Item*)thing;
+			if (potion->item_type == HP_POTION) {
+				HP += potion->combatVal;
+
+				if (HP > GetMaxHP()) {
+					HP = GetMaxHP();
+				}
+
+				cout << "You drink " << potion->name << " and recover " << potion->combatVal << " HP." << endl;
+			}
+			else
+				cout << "You cannot drink this!" << endl;
+		}
+		else
+			cout << "You cannot drink this!" << endl;
+	}
+	else
+		cout << "Cannot find '" << tokens[1] << "', it is not in your inventory." << endl;
 }

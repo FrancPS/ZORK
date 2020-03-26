@@ -258,3 +258,16 @@ void Creature::Go(const vector<string>& tokens) {
 		GetRoom()->creaturesIn.push_back(this);
 	}
 }
+
+// ---- GET MAX HP ----
+/* Returns the maximum number of Health Points this creature has.
+
+	Parameters:
+		- NONE
+	Return:
+		- NONE
+*/
+const int Creature::GetMaxHP() const
+{
+	return maxHP;
+}
