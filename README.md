@@ -52,7 +52,7 @@ As the time was limited while developing this project (1 week) some features wer
 - "TAKE xxx" / "PICK xxx"
    - Takes an item from the room and places it inside the inventory of the player.
 - "TAKE xxx from yyy"
-   - Takes an item from inside another item. "PICK..." also works here. (Note that the word "from" could be replaced by any other work. The parser discards this token.)
+   - Takes an item from inside another item. "PICK..." also works here. (Note that the word "from" could be replaced by any other word. The parser discards this token.)
 - "PUT xxx from yyy"
    - The contrary of the above. "PLACE..." will also work.
 - "LOOT xxx from yyy"
@@ -70,7 +70,7 @@ As the time was limited while developing this project (1 week) some features wer
 - "STATS xxx" / "ST xxx"
    - Prints the stats of a creature in the room.
 - "STATS of xxx"
-   - Same as above. (Note that the word "of" could be replaced by any other work. The parser discards this token.)
+   - Same as above. (Note that the word "of" could be replaced by any other word. The parser discards this token.)
 - "DRINK xxx"
    - Drinks a potion item from the player's inventory. The potion will have its effects.
    
